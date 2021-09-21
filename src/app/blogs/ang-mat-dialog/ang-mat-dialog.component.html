@@ -1,28 +1,89 @@
 
 <article class="ang-matDialog">
-    <div class="article-header">
-        <div class="header-center">
-            <h2 class="category">
-                Angular hands on tutorial
-            </h2>
-            <div>
-                <h1 class="blog-title">
-                    Building a dialog box to edit table row data with Angular Material Components
-                </h1>
-            </div>
-            <div class="author-info">
-                <div fxFlex fxLayout="column">
-                    <span class="span-name">
+    <div fxFlex fxLayout="column">
+        <div class="article-content">
+            <div class="header-center">
+                <h2 class="category">
+                    Angular hands on tutorial
+                </h2>
+                <div>
+                    <h1 class="blog-title">
+                        Building a dialog box to edit table row data with Angular Material Components
+                    </h1>
+                </div>
+                <div class="author-info">
+                    <div fxFlex fxLayout="column">
                         <div class="namee">
                             <span class="nameee">
                                 Elvis Shrestha
                             </span>
+                            
                             <span class="follow">Follow</span>
                         </div>
-                    </span>
+                        <div class="date-readtime">
+                            Sep 20 &nbsp; -10min read
+                        </div>
+                    </div>
+                    
                 </div>
+            </div>
+    
+        </div>
+
+        <div class="article-content">
+            <div class="header-center">
+                <p class="article-paragraph">
+                    This <i>Angular 10 Material Dialog to Edit table row</i> tutorial shows you how we can use the Angular Material Dialog component 
+                    to build a reusable UI for CRUD operations on a table data. 
+                </p>
+                <p class="article-paragraph">
+                    It provides an introduction to concepts required to transfer data 
+                    between components and MatDialog box. You will learn about MatDialogRef, MAT_DIALOG_DATA and MatDialogConfig.
+                </p>
+                <p class="article-header">
+                    What you'll build
+                </p>
+                <p class="article-header">
+                    Let's get started
+                </p>
+                <p class="article-paragraph">
+                    For this tutorial, we will make things simpler and make use of mock data and service to perform back-end tasks. 
+                </p>
+                <p class="article-paragraph">
+                    The model for data table is given below:
+                </p>
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet1}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Our main task is to be able to add a action button to our heroes table. The action button should allow us to set each hero's legend status as true/false and popularity as high/low.
+                    <br><br> In our dialog box template, we will display options as radio button for users to edit a table data. We will get the information from table and make use of MAT SELECT. <br><br>
+                    After getting the model ready, we will generate a new component for our dialog box. <br>
+
+                    <code class="inline-code">ng g c hero-action-dialog</code> The CLI creates a new folder, src/app/hero-action-dialog/, and generates the three files of the component. 
+                    <br><br> Let's start with modifying the hero-action-dialog.component.ts file first. Our file will look like this:
+
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">    
+                       {{snippet}}
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    As mentioned, we will add Material Dialog component. It comes with features like mat-dialog-title, mat-dialog-content, mat-dialog options which makes easier to create the template.  
+                    You can find its official tutorial <a href="https://material.angular.io/components/dialog/overview">here</a> 
+                </p>
                 
             </div>
+
         </div>
+
     </div>
+    
 </article>

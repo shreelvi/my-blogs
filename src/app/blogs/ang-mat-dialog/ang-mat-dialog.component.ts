@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ang-mat-dialog',
@@ -20,9 +19,13 @@ export class AngMatDialogComponent implements OnInit {
   })
   export class TestDialogComponent {
 
+    // vars to store radio button selection
+    legendStatusSelection = null;
+    popularitySelection = null;
+
     constructor(
       public dialogRef: MatDialogRef<TestDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: Hero
+      @Inject(MAT_DIALOG_DATA) public data: HeroActionDialogData
     ) { }
 
     onNoClick(): void {
@@ -40,7 +43,130 @@ export class AngMatDialogComponent implements OnInit {
       Legend: boolean;
       Popularity: boolean;
   }
+
+  export interface HeroActionDialogData{
+    legend: boolean;
+    popularity: string;
+  }
  `
+
+ snippet2 = `
+ <div mat-dialog-content>
+
+    <div fxLayout fxLayoutGap = "1%">
+        <mat-radio-group [(ngModel)]="legendStatusSelection">
+
+            <mat-radio-button class="radio-button" [value] = "false" *ngIf="data.legend">
+                Set Hero Legend Status to False
+            </mat-radio-button>
+
+            <mat-radio-button class="radio-button" [value] = "true" *ngIf="!data.legend">
+                Set Hero Legend Status to True
+            </mat-radio-button>
+
+        </mat-radio-group>
+
+        <mat-radio-group [(ngModel)]="popularitySelection">
+
+        <mat-radio-button class="radio-button" [value] = "false" *ngIf="data.popularity == 'high'">
+            Set Hero Popularity to Low
+        </mat-radio-button>
+
+        <mat-radio-button class="radio-button" [value] = "true" *ngIf="data.popularity == 'low'">
+            Set Hero Popularity to High
+        </mat-radio-button>
+
+        </mat-radio-group>
+    </div>
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+
+</div>
+`
+
+snippet3 = `
+  import { FormsModule } from '@angular/forms';
+
+`
+
+snippet4 = `
+openActionDialog(tableRow: Hero){
+  console.log("Hello");
+  
+  const dialogRef = this.dialog.open(TestDialogComponent, {
+    width: '250px',
+    data:{
+      legend: tableRow.legend,
+      popularity: tableRow.popularity
+    },
+    position: {
+      left: '70%',
+      bottom: '35%'
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(async result => {
+
+    if (result != null){
+      await this.editHeroLegendPopularityStatus(result, tableRow);
+    }
+    console.log(result);
+  });
+}
+
+async editHeroLegendPopularityStatus(result: any, heroRow: Hero){
+  let dialogRef: MatDialogRef<ProgressSpinnerDialogComponent> = this.dialog.open(ProgressSpinnerDialogComponent, {
+    panelClass: 'spinner-container',
+    disableClose: true
+  });
+
+  try{
+    if (result.legend != null) {
+      heroRow.legend = result.legend;
+    }
+
+    if (result.popularity != null) {
+      let popularity = result.popularity? 'high' : 'low';
+      heroRow.popularity = popularity;
+    }
+
+    dialogRef.close();
+    console.log("Flag updated");
+
+    this.changeDetectorRefs.detectChanges();
+    
+  } catch (error) {
+    dialogRef.close();
+    console.log("Error occured!");
+
+  }
+}
+`
+
+snippet5 = `
+  [mat-dialog-close]="{ legend: legendStatusSelection, popularity: popularitySelection }" 
+cdkFocusInitial
+
+`
+
+snippet6 = `
+  <mat-radio-button class="radio-button" [value] = "false" *ngIf="data.popularity == 'high'">
+  <mat-radio-button class="radio-button" [value] = "true" *ngIf="!data.legend">
+`
+
+snippet7 = `
+dialogRef.afterClosed().subscribe(async result => {
+
+  if (result != null){
+    await this.editHeroLegendPopularityStatus(result, tableRow);
+  }
+  console.log(result);
+});
+`
 
   constructor() { 
 

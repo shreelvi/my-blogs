@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ProgressSpinnerDialogComponent } from '../progress-spinner-dialog/progress-spinner-dialog.component';
+import { TestDialogComponent } from '../test-dialog/test-dialog.component';
 
 @Component({
   selector: 'app-test-product-component',
@@ -14,11 +17,64 @@ export class TestProductComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  constructor(private dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef){
+
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  openActionDialog(){
+  openActionDialog(tableRow: Hero){
+    console.log("Hello");
+    
+    const dialogRef = this.dialog.open(TestDialogComponent, {
+      width: '250px',
+      data:{
+        legend: tableRow.legend,
+        popularity: tableRow.popularity
+      },
+      position: {
+        left: '70%',
+        bottom: '35%'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+
+      if (result != null){
+        await this.editHeroLegendPopularityStatus(result, tableRow);
+      }
+      console.log(result);
+    });
+  }
+
+  async editHeroLegendPopularityStatus(result: any, heroRow: Hero){
+    let dialogRef: MatDialogRef<ProgressSpinnerDialogComponent> = this.dialog.open(ProgressSpinnerDialogComponent, {
+      panelClass: 'spinner-container',
+      disableClose: true
+    });
+
+    try{
+      if (result.legend != null) {
+        heroRow.legend = result.legend;
+      }
+
+      if (result.popularity != null) {
+        let popularity = result.popularity? 'high' : 'low';
+        heroRow.popularity = popularity;
+      }
+
+      dialogRef.close();
+      console.log("Flag updated");
+
+      this.changeDetectorRefs.detectChanges();
+      
+    } catch (error) {
+      dialogRef.close();
+      console.log("Error occured!");
+
+    }
   }
 
 }
@@ -27,6 +83,11 @@ export interface Hero {
   id: number;
   name: string;
   rating: number;
+  legend: boolean;
+  popularity: string;
+}
+
+export interface HeroActionDialogData{
   legend: boolean;
   popularity: string;
 }

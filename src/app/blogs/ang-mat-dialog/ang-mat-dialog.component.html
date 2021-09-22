@@ -42,7 +42,36 @@
                 </p>
                 <p class="article-header">
                     What you'll build
+                    
                 </p>
+
+                <p class="article-paragraph">
+                    We have a data table with a list of heroes. As we can see in the picture below, we have action column for each row with a button. 
+                </p>
+
+                <div class="article-img">
+                    <img src="assets/3.png" alt="dialog box" width="700" height="330" role="presentation">
+                </div>
+
+                <p class="article-paragraph">
+                    When the button is clicked, it will display us the dialog box for action to take for our Heroes. It has radio button for user selection which will allow us to modify hero properties. 
+                    If the Hero Legend status is true then dialog box will have option to set the status as false, and vice-versa. And same for popularity property of hero.
+                </p>
+
+                <div class="article-img">
+                    <img src="assets/2.png" alt="dialog box" width="700" height="300" role="presentation">
+                </div>
+
+                <p class="article-paragraph">
+                    After a radio selection is made and clicking OK. The dialog box will close and our table will update with new data. 
+                    We can either modify both Legend and Popularity of Hero or just one of them.
+                </p>
+
+                <div class="article-img">
+                    <img src="assets/1.png" alt="dialog box" width="700" height="300" role="presentation">
+                </div>
+                
+
                 <p class="article-header">
                     Let's get started
                 </p>
@@ -50,7 +79,8 @@
                     For this tutorial, we will make things simpler and make use of mock data and service to perform back-end tasks. 
                 </p>
                 <p class="article-paragraph">
-                    The model for data table is given below:
+                    The model for data table is given below. We have Hero interface for displaying list of heroes in the table. 
+                    And the <strong>HeroActionDialogData</strong> is to transfer data between the table and dialog box to edit Heroes.
                 </p>
                 <pre class="code">
                     <code class="code-block">
@@ -62,10 +92,10 @@
                 <p class="article-paragraph">
                     Our main task is to be able to add a action button to our heroes table. The action button should allow us to set each hero's legend status as true/false and popularity as high/low.
                     <br><br> In our dialog box template, we will display options as radio button for users to edit a table data. We will get the information from table and make use of MAT SELECT. <br><br>
-                    After getting the model ready, we will generate a new component for our dialog box. <br>
+                    After getting the model ready, we will generdate a new component for our dialog box. <br>
 
                     <code class="inline-code">ng g c hero-action-dialog</code> The CLI creates a new folder, src/app/hero-action-dialog/, and generates the three files of the component. 
-                    <br><br> Let's start with modifying the hero-action-dialog.component.ts file first. Our file will look like this:
+                    <br><br> Let's start by modifying the hero-action-dialog.component.ts file first. Our file will look like this:
 
                 </p>
 
@@ -76,9 +106,76 @@
                 </pre>
 
                 <p class="article-paragraph">
-                    As mentioned, we will add Material Dialog component. It comes with features like mat-dialog-title, mat-dialog-content, mat-dialog options which makes easier to create the template.  
-                    You can find its official tutorial <a href="https://material.angular.io/components/dialog/overview">here</a> 
+                    In the constructor we are using <code class="inline-code">@Inject(MAT_DIALOG_DATA) public data: Hero</code>. 
+                    It allows us to get data from the table to modify when we click the action button in mat-table. We get data as HeroActionDialogData. 
+
                 </p>
+
+
+                <p class="article-paragraph">
+                    As mentioned, we will add Material Dialog component. It comes with features like mat-dialog-title, mat-dialog-content, mat-dialog options which makes easier to create the template.  
+                    You can find the official tutorial <a href="https://material.angular.io/components/dialog/overview">here</a> 
+                    
+                    <br><br> We are using radio button in our dialog box to get the selection from user. To bind the selected value we have to use [ngModel]. 
+                    So we need to <code>{{snippet3}}</code> in app.module.ts. In reviewing the template file for our dialog box, we can see that we are binding radio selection to pass value as true or false.
+                    
+                    <br>
+                    <br> The HTML template for the dialog box will look like below:
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">    
+                       {{snippet2}}
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Now that our component for action dialog box is ready. 
+                    It is time to update the component that we want to edit the product data from Mat-table.  
+                    We need to add the method in our ProductComponent which we will call when the action button is clicked. This method will edit legend and popularity of a hero.
+                    
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                        {{snippet4}}
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    As we can see, <strong>editHeroLegendPopularityStatus</strong> method will take the table row when action button is clicked from Heroes list.
+                    It will open the TestDialogComponent which is our dialog box component with applied styles and position.
+                    <br> <br> It passes the data as HeroActionDialogData which will be recieved in the <strong>TestDialogComponent</strong> constructor. Then based on this data, we will display options in our action dialog box.
+                </p>
+
+                <p class="article-paragraph">
+                    The next step will be to get users selection from the dialog box when Ok button is clicked. We will get user selections from the TestDialogComponent template.
+                    <code class="inline-code">{{snippet5}}</code> 
+                    <br> <br> Here, we are passing legendStatusSelection (which we are passing radio button value as true if user selects true and vice versa) and popularitySelection (true for high and false for low)
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                        {{snippet6}}
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    When OK is pressed, below method will run
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                        {{snippet7}}
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    This method will check if user has made any selection. If user has selected legend to set as true then it will update the hero legend property in the mat-table.
+                    After the table is updated we are using ChangeDetectorRef Module from Angular to reset the table.
+                    <br> <br> As mentioned before, we are not using any back-end for this tutorial and so the mock-data is modified temporarily. 
+                </p>
+                
                 
             </div>
 

@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestDialogComponent } from './test-dialog/test-dialog.component';
 import { TestProductComponent } from './test-product-component/test-product.component';
 import { AngularMaterialModule } from './angular-material.module';
+import { FormsModule } from '@angular/forms';
+import { ProgressSpinnerDialogComponent } from './progress-spinner-dialog/progress-spinner-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,12 @@ import { AngularMaterialModule } from './angular-material.module';
     HomePageComponent,
     AngMatDialogComponent,
     TestDialogComponent,
-    TestProductComponent
+    TestProductComponent,
+    ProgressSpinnerDialogComponent
   ],
   imports: [
     AngularMaterialModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule

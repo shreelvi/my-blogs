@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Hero } from '../test-product-component/test-product.component';
+import { Hero, HeroActionDialogData } from '../test-product-component/test-product.component';
 
 @Component({
   selector: 'app-test-dialog',
@@ -9,9 +9,13 @@ import { Hero } from '../test-product-component/test-product.component';
 })
 export class TestDialogComponent {
 
+  legendStatusSelection = null;
+
+  popularitySelection = null;
+
   constructor(
     public dialogRef: MatDialogRef<TestDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Hero
+    @Inject(MAT_DIALOG_DATA) public data: HeroActionDialogData
   ) { }
 
   onNoClick(): void {

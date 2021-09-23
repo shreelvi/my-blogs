@@ -69,9 +69,10 @@
 }
 
 .blog-desc{
-    font-weight: 400;
+    font-weight: 300;
     font-size: 18px;
     color: gray;
+    line-height: 26px;
 }
 
 .article-info a {
@@ -110,6 +111,11 @@
 .list-container a {
     color: #FFFFFF;
     text-decoration: none;
+}
+
+.list-title{
+    font-weight: 500;
+    font-size: 20px;
 }
 
 

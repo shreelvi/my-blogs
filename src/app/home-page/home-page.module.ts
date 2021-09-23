@@ -14,7 +14,6 @@ export const routes = [
   imports: [
       CommonModule,
       AngularMaterialModule,
-      FlexLayoutModule,
       RouterModule.forChild(routes)
   ]
 })

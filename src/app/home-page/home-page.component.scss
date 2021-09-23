@@ -1,13 +1,14 @@
-.home-container{
-    margin-left: 10%;
+.intro-container{
+    margin-left: 0%;
     margin-top: 40px;
-    padding-bottom: 40px;
-    width: 80%;
-    background-color: rgb(242, 242, 242);
+    padding-bottom: 60px;
+    width: 100%;
+    background-color: #1976d2;
 }
 
 .title{
-    padding-top: 40px;
+    color: #F5FFFF;
+    padding-top: 90px;
     margin-left: 20%;
     font-weight: 700;
     letter-spacing: 0;
@@ -15,6 +16,7 @@
 }
 
 .sub-title{
+    color: #F5FFFF ;
     margin-left: 20%;
     margin-top: 20px;
     font-weight: 400;
@@ -45,4 +47,85 @@
     font-size: 13px;
     line-height: 20px;
 }
+
+.main-article-container{
+    margin-left: 14%;
+    display: flex;
+}
+
+.article-img{
+    margin-top: 20px;
+}
+
+.article-info{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 400px;
+}
+
+.info-title{
+    font-weight: 400;
+    font-size: 28px;
+}
+
+.blog-desc{
+    font-weight: 400;
+    font-size: 18px;
+    color: gray;
+}
+
+.article-info a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.footer-row a{
+    color: #BFDBFF;
+    text-decoration: none;
+    padding-left: 44px;
+    font-size: 14px;
+}
+
+.list-container{
+    margin-left: 12.5%;
+    margin-top: 40px;
+    display: flex;
+}
+
+.example-card {
+    max-width: 300px;
+    margin-bottom: 44px;
+    margin-left: 20px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .follow-twitter{
+    padding: 5px 0px 0px 284px;
+}
+
+@media only screen and (max-width : 768px) {
+    .main-article-container{
+        width: fit-content;
+        margin-left: 2%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-container{
+        margin-left: 2.5%;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .follow-twitter{
+        padding: 5px 0px 0px 110px;
+    }
+}
+  
+
 

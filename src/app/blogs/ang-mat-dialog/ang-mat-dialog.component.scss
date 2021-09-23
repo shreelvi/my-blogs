@@ -1,5 +1,5 @@
 .ang-matDialog{
-    margin-top: 60px;
+    margin-top: 91px;
     padding: 5px;
 }
 
@@ -132,13 +132,13 @@
     overflow-x: auto;
     word-wrap: break-word;
     word-break: break-word;
-    font-weight: 400;
+    font-weight: 300;
     
 }
 
 
 .code-block{
-    font-weight: bold;
+    font-weight: 300;
     overflow-x: auto;
     word-wrap: break-word;
     word-break: break-word;
@@ -149,4 +149,8 @@
 .inline-code{
     background-color: rgb(242, 242, 242);
 
+}
+
+.follow-twitter{
+    margin: 5px 0px 0px 5px;
 }

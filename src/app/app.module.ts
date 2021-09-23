@@ -12,6 +12,7 @@ import { TestProductComponent } from './test-product-component/test-product.comp
 import { AngularMaterialModule } from './angular-material.module';
 import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerDialogComponent } from './progress-spinner-dialog/progress-spinner-dialog.component';
+import { AngDirectiveComponent } from './blogs/ang-directive/ang-directive.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProgressSpinnerDialogComponent } from './progress-spinner-dialog/progre
     AngMatDialogComponent,
     TestDialogComponent,
     TestProductComponent,
-    ProgressSpinnerDialogComponent
+    ProgressSpinnerDialogComponent,
+    AngDirectiveComponent
   ],
   imports: [
     AngularMaterialModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ang-mat-dialog',
@@ -168,7 +169,8 @@ dialogRef.afterClosed().subscribe(async result => {
 });
 `
 
-  constructor() { 
+  constructor(private title: Title) { 
+    this.title.setTitle('Blogs | Angular Material Dialog Box to edit table data')
     this.loadScripts();
   }
 

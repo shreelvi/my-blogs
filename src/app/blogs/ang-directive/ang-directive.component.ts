@@ -8,6 +8,44 @@ import { Title } from '@angular/platform-browser';
 })
 export class AngDirectiveComponent implements OnInit {
 
+  snippet1 = `
+  <input type="text" name="UserName" autofocus>
+  `
+
+  snippet2=`
+  import { Directive, OnInit } from '@angular/core';
+  import { MatInput } from '@angular/material/input';
+
+  @Directive({
+    selector: '[matInputFocus]'
+  })
+  export class AutoFocusDirective implements OnInit {
+
+    constructor(
+      private matInput: MatInput
+    ) { }
+
+    ngOnInit() {
+      this.matInput.focus();
+    }
+
+  }
+`
+snippet3 = `
+  <input aria-label="Login ID" matInput matInputFocus formControlName="username" placeholder="Login ID">
+`
+
+snippet4 = `
+  import { AutoFocusDirective } from "./directives/auto-focus.directive"
+
+  @NgModule({
+    imports: [
+      ....,
+      AutoFocusDirective
+    ]
+  })
+`
+
   constructor(private title: Title) {
     this.title.setTitle('Blogs | Angular Attribute Directives Article')
     this.loadScripts();

@@ -34,7 +34,7 @@
         <div class="article-content">
             <div class="header-center">
                 <p class="article-paragraph">
-                    This <strong><i>Angular Attribute Directive with Auto-focus example</i></strong> article walks you through directives in Angular 9 with a sample example of how to create attribute directive to auto-focus on a input form. 
+                    This <strong><i>Angular Attribute Directive with Auto-focus example</i></strong> article walks you through directives in Angular 9 with a sample example of how to create attribute directive to auto-focus on a <code>MAT INPUT</code> form. 
                 </p>
                
                 <div class="article-img">
@@ -69,6 +69,88 @@
                     In this article, we will focus on Attribute Directive and creating one. As explained before, <strong>Attribute Directives</strong> in Angular are responsible for changing the apperanace or behavior of DOM elements and Angular components. 
                     Here, we will create a directive to add Auto-focus in the login form. In other words, we will create a directive to change the behavior of our HTML form. 
                 </p>
+
+                <p class="article-paragraph">
+                    Next, let us discuss about creating a Custom Attribute Directive in our Angular Application.
+                    The main use case is to implement auto-focus to our login page so user should not move mouse curser to the input box. Let's look for the code to accomplish this.
+                </p>
+
+                <p class="article-paragraph">
+                    We could add auto-focus to an input field simply by using the "autofocus" attribute from HTML form. 
+                    
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet1}}
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    This works fine with HTML pages but with Angular applications, this does not work when you move from one page to other.
+                    When user is logged out and it redirects to login page, this does not work. 
+                    This issue is caused because Autofocus feature of html5 only runs when the first time page loads as in SPA all scripts are loaded at first.  
+                </p>
+
+                <p class="article-header">
+                    Let's build the attribute directive 
+                </p>
+
+                <p class="article-paragraph">
+                    We will use Angular CLI to create a directive <code class="inline-code">ng generate directive auto-focus</code>
+                    The CLI creates <code class="inline-code">src/app/auto-focus.directive.ts</code>. It also updates our AppModule.
+                    <br> <br> Let's update our directive file which should look like below snippet:
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet2}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Here, we are using <code>@Directive</code> Decorator to define our directive.
+                    It specifies the directive's CSS attribute selector, [matInputFocus]. 
+                    <br> <br> We add <code>MatInput</code> from <code>@angular/material/input</code> in the directive's constructor which provides a reference to the host DOM element, MATINPUT where we want to add <code>AutoFocus</code>.
+                    The logic in the constructor sets the focus on the selected MAT INPUT HTML element.
+                    
+                    <br><br> We will then use this as an HTML element attribute like below wherever we require auto focus feature in our application by just adding the selector <strong>matInputFocus</strong> in Mat-Input elements.
+                    <br><br> First, lets Import the Directive component in the app module or in the Module where we want to use it. 
+                    In this example, we are using it in the Login component, so we will import this directive in our module like: 
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet4}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Finally, update the login form.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet3}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Angular creates an instance of the Directive class we created and provides a reference to the 
+                    <code>input</code> element into the directive's constructor which sets the focus.
+                </p>
+
+                <p class="article-paragraph">
+                    In the same way, you can create custom attribute directives to change the apperance or behavior of your page.
+                    We can handle user events to use directives, pass custom values from user input into attribute directives.
+                    
+                    <br> <br> For example: we can create highlight directive to highlight an HTML element on mouse-hover, mouse-click. We can get color that we want to highlight from user and pass it to the directive to apply the selection.
+                </p>
+
+
                 
             </div>
 

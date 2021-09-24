@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerDialogComponent } from './progress-spinner-dialog/progress-spinner-dialog.component';
 import { AngDirectiveComponent } from './blogs/ang-directive/ang-directive.component';
 import { FooterComponent } from './footer/footer.component';
+import { AutoFocusDirective } from './auto-focus.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FooterComponent } from './footer/footer.component';
     TestProductComponent,
     ProgressSpinnerDialogComponent,
     AngDirectiveComponent,
-    FooterComponent
+    FooterComponent,
+    AutoFocusDirective
   ],
   imports: [
     AngularMaterialModule,

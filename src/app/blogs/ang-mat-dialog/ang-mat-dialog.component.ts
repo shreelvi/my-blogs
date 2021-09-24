@@ -42,7 +42,7 @@ export class AngMatDialogComponent implements OnInit {
       name: string;
       Rating: string;
       Legend: boolean;
-      Popularity: boolean;
+      Popularity: string;
   }
 
   export interface HeroActionDialogData{

@@ -15,6 +15,7 @@ import { ProgressSpinnerDialogComponent } from './progress-spinner-dialog/progre
 import { AngDirectiveComponent } from './blogs/ang-directive/ang-directive.component';
 import { FooterComponent } from './footer/footer.component';
 import { AutoFocusDirective } from './auto-focus.directive';
+import { SuperWifiArticleComponent } from './blogs/super-wifi-article/super-wifi-article.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AutoFocusDirective } from './auto-focus.directive';
     ProgressSpinnerDialogComponent,
     AngDirectiveComponent,
     FooterComponent,
-    AutoFocusDirective
+    AutoFocusDirective,
+    SuperWifiArticleComponent
   ],
   imports: [
     AngularMaterialModule,

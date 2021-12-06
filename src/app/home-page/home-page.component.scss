@@ -73,6 +73,7 @@
     font-size: 18px;
     color: gray;
     line-height: 26px;
+    text-overflow: ellipsis;
 }
 
 .article-info a {
@@ -90,6 +91,8 @@
     max-width: 300px;
     margin-bottom: 44px;
     margin-left: 20px;
+    height: 400px;
+    text-overflow: ellipsis;
   }
   
   .example-header-image {
@@ -109,6 +112,10 @@
 .list-title{
     font-weight: 500;
     font-size: 20px;
+}
+
+.card-content{
+    text-overflow: ellipsis;
 }
 
 

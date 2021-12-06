@@ -66,3 +66,9 @@ p {
     opacity: 0.7;
   }
 
+  @media only screen and (max-width : 768px) {
+    .home{
+      margin-right: 44px;
+    }
+  }
+

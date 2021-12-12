@@ -8,6 +8,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class AngMatDialogComponent implements OnInit {
 
+  pageId="/blog1"
+
   snippet = `
   import { Component, Inject } from '@angular/core';
   import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

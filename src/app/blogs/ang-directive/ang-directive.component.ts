@@ -8,6 +8,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class AngDirectiveComponent implements OnInit {
 
+  pageId = "/angular-directive-blog"
+
   snippet1 = `
   <input type="text" name="UserName" autofocus>
   `

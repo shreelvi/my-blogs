@@ -16,6 +16,7 @@ import { AngDirectiveComponent } from './blogs/ang-directive/ang-directive.compo
 import { FooterComponent } from './footer/footer.component';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { SuperWifiArticleComponent } from './blogs/super-wifi-article/super-wifi-article.component';
+import { DisqusModule } from 'ngx-disqus';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SuperWifiArticleComponent } from './blogs/super-wifi-article/super-wifi
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DisqusModule.forRoot('elvis-tech-blogs')
   ],
   providers: [],
   bootstrap: [AppComponent]

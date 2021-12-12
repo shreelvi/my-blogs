@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SuperWifiArticleComponent implements OnInit {
 
+  pageId = "/blog3"
+
   constructor() { 
     this.loadScripts();
   }

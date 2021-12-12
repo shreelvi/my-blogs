@@ -1,0 +1,130 @@
+<article class="ang-matDialog">
+    <div fxFlex fxLayout="column">
+        <div class="article-content">
+            <div class="header-center">
+                <h2 class="category">
+                    Angular tutorial
+                </h2>
+                <div>
+                    <h1 class="blog-title">
+                        Unit Testing Angular Services and Components Using JEST Framework (Part1)                  
+                    </h1>
+                </div>
+                <div class="author-info">
+                    <div fxFlex fxLayout="column">
+                        <div class="namee">
+                            <span class="nameee">
+                                Elvis Shrestha
+                            </span>
+                            
+                            <span class="follow-twitter">
+                                <a href="https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow</a>                      
+                            </span>
+                        </div>
+                        <div class="date-readtime">
+                            Dec 10 &nbsp; 2021
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+    
+        </div>
+
+        <div class="article-content">
+            <div class="header-center">
+                <p class="article-paragraph">
+                    Unit testing your angular applications helps you ensure that your app is working as you expect. 
+                    Unit-testing becomes a very useful tool to integrate automatic testing as the codebase becomes large and the app becomes prone to bugs and issues. 
+                    I like unit testing because I don’t have to run the app manually and test each time I make changes in my code.  
+                </p>
+
+                <p class="article-header">
+                    Introduction         
+                </p>
+
+                <p class="article-paragraph">
+                    This testing tutorial will offer techniques and tips on how to write unit tests for the service logic and the component in Angular. 
+                    We will use a sample application that gets a list of groups from a backend service using HttpClient and displays the group information in the table. 
+                    It walks you through testing the service functions that calls the API by using mock data to fake the http calls, and testing of the component using Angular’s Testing object model - TestBed.                 
+                </p>
+
+                <p class="article-paragraph">
+                    As Angular app is managed by the @NgModule classes. 
+                    And we can define dependencies and setup environments for each component on their own module or in the root module. 
+                    Similarly, services in angular often depend on other services which are injected in their constructor. So, in order to test the angular component/ services we will require a similar setup for creating components with its dependencies.                 </p>
+                
+                <p class="article-paragraph">
+                    Angular provides the TestBed class to set up testing environments for components. 
+                    We will see more detail on this as we test our component. Angular also provides utilities and libraries to test for service dependencies and HttpCalls.
+                </p>
+
+                <p class="article-header">
+                    Setup Testing         
+                </p>
+
+                <p class="article-paragraph">
+                    Angular app by default comes with the Jasmine test framework and  the Angular CLI downloads and installs everything you need to test an Angular application. 
+                    Both frameworks make use of Angular testing libraries and modules and there are only a few syntax differences between them. 
+                    You can find an official tutorial on testing using the Jasmine framework here. JEST seems to be liked by developers because it is faster and requires less configuration for testing angular apps. Unlike Jasmine and Karma, it does not require a browser to load the test results and it runs the tests in parallel. We can use Angular CLI to view the results and generate coverage reports.
+                </p>
+
+                <p class="article-paragraph">
+                    This tutorial requires that you have a JEST framework configured as you have to install it manually and <a href="https://medium.com/@nerdic.coder/how-to-use-jest-unit-tests-with-angular-87509b500158">here</a> 
+                    is one of the guides which can help you with set up. 
+                </p>
+                
+                <p class="article-paragraph">
+                    Angular provides the TestBed class to set up testing environments for components. 
+                    We will see more detail on this as we test our component. Angular also provides utilities and libraries to test for service dependencies and HttpCalls.
+                </p>
+
+                <p class="article-header">
+                    Testing HTTP Services        
+                </p>
+
+                <p class="article-paragraph">
+                    For this tutorial, we are going to test the service that is only dependent on HttpClient to call the api. 
+                    So we will see how we can test the Http services. 
+                    I will show you two different ways to test it. First, we will see how we can mock the HttpClient get method to return a rxJS promise with  a group response. The service we are going to test is given below.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet1}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    The groups data service makes a HTTP GET call to remote servers by injecting and delegating to the Angular HttpClientservice for XHR calls. 
+                    We can test this data service with an injected HttpClient mock class with a GET Function as below. 
+                    Similarly, if the service is dependent on other services we would test it by mocking the dependent services.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet2}}
+        
+                    </code>
+                </pre>
+
+                                
+                <p class="article-paragraph">
+                    The GroupsService getGroups() method return Observables so we must subscribe to an observable to cause it to execute and assert that method succeeds or fails.app-footer
+                    The test technique above does not use any Angular util. 
+                    We are simply mocking HttpClient service using Jest and injecting the mock service to create GroupService.
+                    So when we call the getGroups() function, it will return the mockGroupResponse that we have defined.
+                    The HttpClient Get function in this test will chain the pipe function which will return the resolved promise. We can mock the function to return reject promise using Jest MockImplementation.
+                    To view more about testing asynchronous code, here is the <a href="https://jestjs.io/docs/asynchronous">link</a>.
+                </p>
+                
+            </div>
+        </div>
+
+        <div class="comments">
+            <disqus [identifier]="pageId"></disqus>
+        </div>
+
+    </div>
+</article>

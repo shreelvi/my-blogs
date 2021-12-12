@@ -17,6 +17,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { SuperWifiArticleComponent } from './blogs/super-wifi-article/super-wifi-article.component';
 import { DisqusModule } from 'ngx-disqus';
+import { AngTestJestComponent } from './blogs/ang-test-jest/ang-test-jest.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DisqusModule } from 'ngx-disqus';
     AngDirectiveComponent,
     FooterComponent,
     AutoFocusDirective,
-    SuperWifiArticleComponent
+    SuperWifiArticleComponent,
+    AngTestJestComponent
   ],
   imports: [
     AngularMaterialModule,

@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'blog1', loadChildren: () => import('./blogs/ang-mat-dialog/ang-mat-dialog.module').then(m => m.AngMatDialogModule) },
   { path: 'angular-directive-blog', loadChildren: () => import('./blogs/ang-directive/ang-directive.module').then(m => m.AngDirectiveModule) },
   { path: 'blog3', loadChildren: () => import('./blogs/super-wifi-article/super-wifi-article.module').then(m => m.SuperWifiArticleModule) },
+  { path: 'blog4', loadChildren: () => import('./blogs/ang-test-jest/ang-test-jest.module').then(m => m.AngTestJestModule) },
   { path: 'test-table', loadChildren: () => import('./test-product-component/test-product.module').then(m => m.TestProductModule) }
 
 ];

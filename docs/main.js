@@ -1671,97 +1671,145 @@ class AngTestJestComponent {
         this.title = title;
         this.pageId = "/blog4";
         this.snippet1 = `
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IGroupsResponse } from '../models/groups-test-demo';
-import { environment } from '../../environments/environment';
-import { catchError, tap } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+  import { Injectable } from '@angular/core';
+  import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+  import { IGroupsResponse } from '../models/groups-test-demo';
+  import { environment } from '../../environments/environment';
+  import { catchError, tap } from 'rxjs/operators';
+  import { Observable, throwError } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class GroupsTestDemoService {
+  @Injectable({
+      providedIn: 'root'
+  })
+  export class GroupsTestDemoService {
 
-    private url: string = '/api/users';
+      private url: string = '/api/users';
 
-    baseUrl = environment.apiUrl;
+      baseUrl = environment.apiUrl;
 
-    constructor(private httpClient: HttpClient) { }
+      constructor(private httpClient: HttpClient) { }
 
-    getGroups(): Observable<IGroupsResponse> {
-        return this.httpClient.get<IGroupsResponse>(this.baseUrl + 'group')
-            .pipe(
-                tap(groups => console.log('groups fetched')),
-                catchError(this.handleError)
-                ) as Observable<IGroupsResponse>;
-    }
+      getGroups(): Observable<IGroupsResponse> {
+          return this.httpClient.get<IGroupsResponse>(this.baseUrl + 'group')
+              .pipe(
+                  tap(groups => console.log('groups fetched')),
+                  catchError(this.handleError)
+                  ) as Observable<IGroupsResponse>;
+      }
 
-    private handleError(error: HttpErrorResponse) {
-        if (error.status === 0) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.error('An error occurred:', error.error);
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong.
-          console.error(
-            console.log(error);
+      private handleError(error: HttpErrorResponse) {
+          if (error.status === 0) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.error('An error occurred:', error.error);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong.
+            console.error(
+              console.log(error);
+          }
+
+          // Return an observable with a user-facing error message.
+          return throwError(
+            'Something bad happened; please try again later.');
+        }
+      
+  }
+  `;
+        this.snippet2 = `
+    import { IGroupsResponse } from "../models/groups-test-demo";
+    import { GroupsTestDemoService } from "./groups-test-demo.service"
+
+    describe('GroupsDemoService (using mock)', () => {
+        let groupsDemoService : GroupsTestDemoService;
+        let httpClientMock: any; // create httpClient mock variable of any type
+
+        // mock back-end response
+        let mockGroupsResponse: IGroupsResponse = {
+            groups: [
+                {
+                    groupName: "test1",
+                    groupDescription: "test desc",
+                    apiRoles: "read, write, update"
+                },
+                {
+                    groupName: "test2",
+                    groupDescription: "test desc",
+                    apiRoles: "read, write"
+                }
+            ]
         }
 
-        // Return an observable with a user-facing error message.
-        return throwError(
-          'Something bad happened; please try again later.');
-      }
-    
-}
-`;
-        this.snippet2 = `
-import { IGroupsResponse } from "../models/groups-test-demo";
-import { GroupsTestDemoService } from "./groups-test-demo.service"
+        beforeEach(() => {
+          // this method calls before executing each test
+          // setup mock for httpClient service with 'Get' function using jest.
+            httpClientMock = {
+                get: jest.fn()
+            };
 
-describe('GroupsDemoService (using mock)', () => {
-    let groupsDemoService : GroupsTestDemoService;
-    let httpClientMock: any;
+            // create the service to test by injecting the mock http service 
+            groupsDemoService = new GroupsTestDemoService(httpClientMock);
+        });
 
-    let mockGroupsResponse: IGroupsResponse = {
-        groups: [
-            {
-                groupName: "test1",
-                groupDescription: "test desc",
-                apiRoles: "read, write, update"
-            },
-            {
-                groupName: "test2",
-                groupDescription: "test desc",
-                apiRoles: "read, write"
-            },
-            {
-                groupName: "test3",
-                groupDescription: "test desc",
-                apiRoles: "read"
+        it('should return expected groups', async() => {
+          // mock observable to return resolved promise with mock group response
+          // the real function uses pipe to stream observables so that function is mocked
+            const mockObservable = {
+                pipe: () => Promise.resolve(mockGroupsResponse)
             }
-        ]
-    }
+            httpClientMock.get.mockImplementation(() => mockObservable) // using Jest mockImplementation to return http response that we mocked
+
+            await expect(groupsDemoService.getGroups()).resolves.toBe(mockGroupsResponse); // call the real method and assert that the method succeeds and return expected result 
+        })
+
+        
+    })
+`;
+        this.snippet3 = `
+  import { HttpClient } from "@angular/common/http";
+  import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+  import { TestBed } from "@angular/core/testing";
+  import { GroupsTestDemoService } from "./groups-test-demo.service"
+`;
+        this.snippet4 = `
+  describe('HttpClient testing using Angular testing libraries', () => {
+    let httpClient: HttpClient;
+    let httpTestingController: HttpTestingController;
+    let groupsDemoService: GroupsTestDemoService; 
 
     beforeEach(() => {
-        httpClientMock = {
-            get: jest.fn()
-        };
+      TestBed.configureTestingModule({
+        imports: [ HttpClientTestingModule ]
+      });
 
-        groupsDemoService = new GroupsTestDemoService(httpClientMock);
+      // Inject the http service, groups service and test controller for each test
+      httpClient = TestBed.inject(HttpClient);
+      httpTestingController = TestBed.inject(HttpTestingController);
+      groupsDemoService = TestBed.inject(GroupsTestDemoService);
     });
+    /// Tests begin ///
+  });
+`;
+        this.snippet5 = `
+  it('can test HttpClient.get', async() => {      
+    // Make an HTTP GET request
+    const response =  groupsDemoService.getGroups();
+    response.subscribe(data => 
+        expect(data).resolves.toBe(mockGroupsResponse));
+    //expect(response).resolves.toBe(mockGroupsResponse);
 
-    it('should return expected groups', async() => {
-        const mockObservable = {
-            pipe: () => Promise.resolve(mockGroupsResponse)
-        }
-        httpClientMock.get.mockImplementation(() => mockObservable)
+    // The following expectOne() will match the request's URL.
+    // If no requests or multiple requests matched that URL
+    // expectOne() would throw.
+    const req = httpTestingController.expectOne('https://localhost:5001/api/group')
+    expect(req.request.method).toEqual('GET');
 
-        await expect(groupsDemoService.getGroups()).resolves.toBe(mockGroupsResponse);
-    })
-
-    
-})
+    // Respond with mock data, causing Observable to resolve.
+    // Subscribe callback asserts that correct data was returned.
+    req.flush(mockGroupsResponse);
+        
+    // Finally, assert that there are no outstanding requests.
+    httpTestingController.verify();
+  });
 `;
         this.title.setTitle('Blogs | Testing Angular HTTP Service calls using JEST');
         this.loadScripts();
@@ -1783,7 +1831,7 @@ describe('GroupsDemoService (using mock)', () => {
     }
 }
 AngTestJestComponent.ɵfac = function AngTestJestComponent_Factory(t) { return new (t || AngTestJestComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["Title"])); };
-AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AngTestJestComponent, selectors: [["app-ang-test-jest"]], decls: 65, vars: 3, consts: [[1, "ang-matDialog"], ["fxFlex", "", "fxLayout", "column"], [1, "article-content"], [1, "header-center"], [1, "category"], [1, "blog-title"], [1, "author-info"], [1, "namee"], [1, "nameee"], [1, "follow-twitter"], ["href", "https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw", "data-show-count", "false", "data-show-screen-name", "false", 1, "twitter-follow-button"], [1, "date-readtime"], [1, "article-paragraph"], [1, "article-header"], ["href", "https://medium.com/@nerdic.coder/how-to-use-jest-unit-tests-with-angular-87509b500158"], [1, "code"], [1, "code-block"], ["href", "https://jestjs.io/docs/asynchronous"], [1, "comments"], [3, "identifier"]], template: function AngTestJestComponent_Template(rf, ctx) { if (rf & 1) {
+AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AngTestJestComponent, selectors: [["app-ang-test-jest"]], decls: 101, vars: 6, consts: [[1, "ang-matDialog"], ["fxFlex", "", "fxLayout", "column"], [1, "article-content"], [1, "header-center"], [1, "category"], [1, "blog-title"], [1, "author-info"], [1, "namee"], [1, "nameee"], [1, "follow-twitter"], ["href", "https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw", "data-show-count", "false", "data-show-screen-name", "false", 1, "twitter-follow-button"], [1, "date-readtime"], [1, "article-paragraph"], [1, "article-header"], ["href", "https://angular.io/guide/testing"], ["href", "https://medium.com/@nerdic.coder/how-to-use-jest-unit-tests-with-angular-87509b500158"], [1, "code"], [1, "code-block"], ["href", "https://jestjs.io/docs/asynchronous"], [1, "comments"], [3, "identifier"]], template: function AngTestJestComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "article", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -1818,7 +1866,7 @@ AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "div", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, " Unit testing your angular applications helps you ensure that your app is working as you expect. Unit-testing becomes a very useful tool to integrate automatic testing as the codebase becomes large and the app becomes prone to bugs and issues. I like unit testing because I don\u2019t have to run the app manually and test each time I make changes in my code. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, " Unit testing your angular applications helps you ensure that your app is working as you expect. Unit-testing becomes a very useful tool to integrate automatic testing as the codebase grows large in size and the app is prone to bugs and issues. I like unit testing because I don\u2019t have to run the app manually and test each time I make changes in my code. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "p", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](24, " Introduction ");
@@ -1836,61 +1884,118 @@ AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](32, " Setup Testing ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](34, " Angular app by default comes with the Jasmine test framework and the Angular CLI downloads and installs everything you need to test an Angular application. Both frameworks make use of Angular testing libraries and modules and there are only a few syntax differences between them. You can find an official tutorial on testing using the Jasmine framework here. JEST seems to be liked by developers because it is faster and requires less configuration for testing angular apps. Unlike Jasmine and Karma, it does not require a browser to load the test results and it runs the tests in parallel. We can use Angular CLI to view the results and generate coverage reports. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](34, " Angular app by default comes with the Jasmine test framework and the Angular CLI downloads and installs everything you need to test an Angular application. Both frameworks make use of Angular testing libraries and modules and there are only a few syntax differences between them. You can find an official tutorial on testing using the Jasmine framework ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "a", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, "here");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, " This tutorial requires that you have a JEST framework configured as you have to install it manually and ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "a", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "here");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](37, ". JEST seems to be liked by developers because it is faster and requires less configuration for testing angular apps. Unlike Jasmine and Karma, it does not require a browser to load the test results and it runs the tests in parallel. We can use Angular CLI to view the results and generate coverage reports. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](39, " is one of the guides which can help you with set up. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](39, " This tutorial requires that you have a JEST framework configured as you have to install it manually and ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "a", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](41, "here");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](41, " Angular provides the TestBed class to set up testing environments for components. We will see more detail on this as we test our component. Angular also provides utilities and libraries to test for service dependencies and HttpCalls. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](42, " is one of the guides which can help you with set up. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "p", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, " Testing HTTP Services ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](43, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](44, " Angular provides the TestBed class to set up testing environments for components. We will see more detail on this as we test our component. Angular also provides utilities and libraries to test for service dependencies and HttpCalls. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, " For this tutorial, we are going to test the service that is only dependent on HttpClient to call the api. So we will see how we can test the Http services. I will show you two different ways to test it. First, we will see how we can mock the HttpClient get method to return a rxJS promise with a group response. The service we are going to test is given below. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, " Testing HTTP Services ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "pre", 15);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](47, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "code", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](49);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](47, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](48, " For this tutorial, we are going to test the service that is only dependent on HttpClient to call the api. So we will see how we can test the Http services. I will show you two different ways to test it. First, we will see how we can mock the HttpClient get method to return a rxJS promise with a group response. The service we are going to test is given below. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52, " The groups data service makes a HTTP GET call to remote servers by injecting and delegating to the Angular HttpClientservice for XHR calls. We can test this data service with an injected HttpClient mock class with a GET Function as below. Similarly, if the service is dependent on other services we would test it by mocking the dependent services. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, "\n                ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "pre", 15);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](54, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "code", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](56);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](55, " The groups data service makes a HTTP GET call to remote servers by injecting and delegating to the Angular HttpClientservice for XHR calls. We can test this data service with an injected HttpClient mock class with a GET Function as below. Similarly, if the service is dependent on other services we would test it by mocking the dependent services. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59, " The GroupsService getGroups() method return Observables so we must subscribe to an observable to cause it to execute and assert that method succeeds or fails.app-footer The test technique above does not use any Angular util. We are simply mocking HttpClient service using Jest and injecting the mock service to create GroupService. So when we call the getGroups() function, it will return the mockGroupResponse that we have defined. The HttpClient Get function in this test will chain the pipe function which will return the resolved promise. We can mock the function to return reject promise using Jest MockImplementation. To view more about testing asynchronous code using JEST, here is the ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "a", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, "link");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](60, "\n                ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, ". ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](61, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, " The GroupsService getGroups() method return Observables so we must subscribe to an observable to cause it to execute and assert that method succeeds or fails. The test technique above does not use any Angular util. We are simply mocking HttpClient service using Jest and injecting the mock service to create GroupService. So when we call the getGroups() function, it will return the mockGroupResponse that we have defined. The HttpClient Get function in this test will chain the pipe function which will return the resolved promise. We can mock the function to return reject promise using Jest MockImplementation. To view more about testing asynchronous code using JEST, here is the ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "a", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](64, "link");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](65, ". ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](66, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](67, " Testing HTTP Requests Using Angular library ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](69, " Other interactions between the data services and the httpclient can be complex and difficult to mock with Jest mock functions. The HttpClientTestingModule can make testing other complex scenarios like POST, PUT or DELETE calls easier to test. The ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](70, "code");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](71, "@angular/common/http/testing");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](72, " library makes it straightforward to set up mocking to mock the HTTP backend service so our tests can simulatealls to a remote server. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](73, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](74, " Setting up HttpClientTestingModule ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](75, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](76, " To test httpclient we need to import the HttpClientTestingModule, TestBed and the mocking controller and other required library as below. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](77, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](78, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](79, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](80);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](81, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](82, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](83, " Then we need to setup our test environment for the service we are going to test using TestBed and add the HttpClientTestingModule to the TestBed. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](84, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](85, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](87);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](88, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](90, " Now we have setup our testing environment so that the requests made in our tests hit the testing backend instead of real backend server. We are injecting httpClient service and the mocking controller using ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](91, "code");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](92, "TestBed.inject()");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](93, " so we can reference them in our tests. Next we can write our unit test for getGroups method that expects a GET request and provides a mock response. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](94, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](95, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](96, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](97);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](98, "\n                ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "div", 18);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](64, "disqus", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "div", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](100, "disqus", 20);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](49);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](52);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet1, "\n        \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet2, "\n        \n                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet3, "\n        \n                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet4, "\n        \n                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet5, "\n        \n                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("identifier", ctx.pageId);
     } }, directives: [ngx_disqus__WEBPACK_IMPORTED_MODULE_2__["ɵa"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhbmctdGVzdC1qZXN0LmNvbXBvbmVudC5zY3NzIn0= */", ".ang-matDialog[_ngcontent-%COMP%] {\n  margin-top: 91px;\n  padding: 5px;\n}\n\n.article-content[_ngcontent-%COMP%] {\n  justify-content: center;\n  display: flex;\n}\n\n.header-center[_ngcontent-%COMP%] {\n  margin-top: 0px;\n  margin-right: 64px;\n  max-width: 680px;\n  width: 100%;\n  min-width: 0px;\n}\n\n.category[_ngcontent-%COMP%] {\n  margin-top: 3.88em;\n  color: #757575;\n  margin-bottom: -0.31em;\n  font-style: normal;\n  letter-spacing: 0.077em;\n  line-height: 18px;\n  text-transform: uppercase;\n  font-size: 13px;\n  font-weight: 400;\n}\n\n.blog-title[_ngcontent-%COMP%] {\n  line-height: 60px;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 36px;\n}\n\n.author-info[_ngcontent-%COMP%] {\n  margin-top: 22px;\n  justify-content: space-between;\n  display: flex;\n  align-items: center;\n}\n\n.info-container[_ngcontent-%COMP%] {\n  margin-left: 8px;\n  width: 100%;\n  display: block;\n}\n\n.name[_ngcontent-%COMP%] {\n  display: flex;\n}\n\n.namee[_ngcontent-%COMP%] {\n  margin-bottom: 2px;\n  align-items: center;\n  display: flex;\n  line-height: 20px;\n  font-size: 14px;\n}\n\n.nameee[_ngcontent-%COMP%] {\n  text-overflow: ellipsis;\n  max-height: 20px;\n  line-height: 14px;\n}\n\n.follow[_ngcontent-%COMP%] {\n  margin-left: 6px;\n  text-decoration: none;\n  display: inline-block;\n  border-top-style: solid;\n  border-top-width: 1px;\n  border-top-left-radius: 99em;\n  border-top-right-radius: 99em;\n  border-bottom-right-radius: 99em;\n  border-bottom-left-radius: 99em;\n  background-position-x: initial;\n  background-position-y: initial;\n  background-size: initial;\n  background-attachment: initial;\n  background-origin: initial;\n  background-clip: initial;\n  background-color: #368ae7;\n  padding-top: 0px;\n  padding-right: 8px;\n  padding-left: 8px;\n  padding-bottom: 1px;\n  color: white;\n  font-size: 13px;\n  line-height: 20px;\n}\n\n.date-readtime[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  color: #757575;\n  line-height: 20px;\n  font-size: 14px;\n  font-weight: 400;\n}\n\n.article-paragraph[_ngcontent-%COMP%] {\n  margin-top: 32px;\n  font-size: 20px;\n  line-height: 32px;\n  font-weight: 300;\n}\n\n.article-header[_ngcontent-%COMP%] {\n  margin-top: 32px;\n  font-size: 26px;\n  line-height: 44px;\n  font-weight: 400;\n}\n\n.code[_ngcontent-%COMP%] {\n  background-image: initial;\n  background-position-x: initial;\n  background-position-y: initial;\n  background-size: initial;\n  background-attachment: initial;\n  background-origin: initial;\n  background-clip: initial;\n  background-color: #f2f2f2;\n  overflow-x: auto;\n  word-wrap: break-word;\n  word-break: break-word;\n  font-weight: 300;\n}\n\n.code-block[_ngcontent-%COMP%] {\n  font-weight: 300;\n  overflow-x: auto;\n  word-wrap: break-word;\n  word-break: break-word;\n  float: left;\n  font-size: 14px;\n}\n\n.inline-code[_ngcontent-%COMP%] {\n  background-color: #f2f2f2;\n}\n\n.follow-twitter[_ngcontent-%COMP%] {\n  margin: 5px 0px 0px 5px;\n}\n\n.comments[_ngcontent-%COMP%] {\n  margin-top: 44px;\n  margin-left: 20%;\n  margin-right: 20%;\n}\n\n@media only screen and (max-width: 768px) {\n  .article-content[_ngcontent-%COMP%] {\n    margin-left: 44px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2FuZy1tYXQtZGlhbG9nLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZ0JBQUE7RUFDQSxZQUFBO0FBQ0o7O0FBRUE7RUFDSSx1QkFBQTtFQUNBLGFBQUE7QUFDSjs7QUFHQTtFQUNJLGVBQUE7RUFDQSxrQkFBQTtFQUNBLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGNBQUE7QUFBSjs7QUFHQTtFQUNJLGtCQUFBO0VBQ0EsY0FBQTtFQUNBLHNCQUFBO0VBQ0Esa0JBQUE7RUFDQSx1QkFBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSxlQUFBO0VBQ0EsZ0JBQUE7QUFBSjs7QUFHQTtFQUNJLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUE7QUFBSjs7QUFJQTtFQUNJLGdCQUFBO0VBQ0EsOEJBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7QUFESjs7QUFLQTtFQUNJLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGNBQUE7QUFGSjs7QUFLQTtFQUNJLGFBQUE7QUFGSjs7QUFPQTtFQUNJLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxhQUFBO0VBQ0EsaUJBQUE7RUFDQSxlQUFBO0FBSko7O0FBUUE7RUFDSSx1QkFBQTtFQUNBLGdCQUFBO0VBQ0EsaUJBQUE7QUFMSjs7QUFRQTtFQUNJLGdCQUFBO0VBQ0EscUJBQUE7RUFDQSxxQkFBQTtFQUNBLHVCQUFBO0VBQ0EscUJBQUE7RUFDQSw0QkFBQTtFQUNBLDZCQUFBO0VBQ0EsZ0NBQUE7RUFDQSwrQkFBQTtFQUNBLDhCQUFBO0VBQ0EsOEJBQUE7RUFDQSx3QkFBQTtFQUNBLDhCQUFBO0VBQ0EsMEJBQUE7RUFDQSx3QkFBQTtFQUNBLHlCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNBLGlCQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0FBTEo7O0FBUUE7RUFDSSxnQkFBQTtFQUNBLGNBQUE7RUFDQSxpQkFBQTtFQUNBLGVBQUE7RUFDQSxnQkFBQTtBQUxKOztBQVFBO0VBQ0ksZ0JBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7RUFDQSxnQkFBQTtBQUxKOztBQVFBO0VBQ0ksZ0JBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7RUFDQSxnQkFBQTtBQUxKOztBQVFBO0VBQ0kseUJBQUE7RUFDQSw4QkFBQTtFQUNBLDhCQUFBO0VBQ0Esd0JBQUE7RUFDQSw4QkFBQTtFQUNBLDBCQUFBO0VBQ0Esd0JBQUE7RUFDQSx5QkFBQTtFQUNBLGdCQUFBO0VBQ0EscUJBQUE7RUFDQSxzQkFBQTtFQUNBLGdCQUFBO0FBTEo7O0FBVUE7RUFDSSxnQkFBQTtFQUNBLGdCQUFBO0VBQ0EscUJBQUE7RUFDQSxzQkFBQTtFQUNBLFdBQUE7RUFDQSxlQUFBO0FBUEo7O0FBVUE7RUFDSSx5QkFBQTtBQVBKOztBQVdBO0VBQ0ksdUJBQUE7QUFSSjs7QUFXQTtFQUNJLGdCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxpQkFBQTtBQVJKOztBQVlBO0VBQ0k7SUFDSSxpQkFBQTtFQVROO0FBQ0YiLCJmaWxlIjoiYW5nLW1hdC1kaWFsb2cuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYW5nLW1hdERpYWxvZ3tcbiAgICBtYXJnaW4tdG9wOiA5MXB4O1xuICAgIHBhZGRpbmc6IDVweDtcbn1cblxuLmFydGljbGUtY29udGVudHtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICBkaXNwbGF5OiBmbGV4O1xuXG59XG5cbi5oZWFkZXItY2VudGVye1xuICAgIG1hcmdpbi10b3A6IDBweDtcbiAgICBtYXJnaW4tcmlnaHQ6IDY0cHg7XG4gICAgbWF4LXdpZHRoOiA2ODBweDtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBtaW4td2lkdGg6IDBweDtcbn1cblxuLmNhdGVnb3J5e1xuICAgIG1hcmdpbi10b3A6IDMuODhlbTtcbiAgICBjb2xvcjogcmdiKDExNywgMTE3LCAxMTcpO1xuICAgIG1hcmdpbi1ib3R0b206IC0wLjMxZW07XG4gICAgZm9udC1zdHlsZTogbm9ybWFsO1xuICAgIGxldHRlci1zcGFjaW5nOiAwLjA3N2VtO1xuICAgIGxpbmUtaGVpZ2h0OiAxOHB4O1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgZm9udC1zaXplOiAxM3B4O1xuICAgIGZvbnQtd2VpZ2h0OiA0MDA7XG59XG5cbi5ibG9nLXRpdGxle1xuICAgIGxpbmUtaGVpZ2h0OiA2MHB4O1xuICAgIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgICBmb250LXdlaWdodDogNDAwO1xuICAgIGZvbnQtc2l6ZTogMzZweDtcblxufVxuXG4uYXV0aG9yLWluZm97XG4gICAgbWFyZ2luLXRvcDogMjJweDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyOyAgXG5cbn1cblxuLmluZm8tY29udGFpbmVye1xuICAgIG1hcmdpbi1sZWZ0OiA4cHg7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgZGlzcGxheTogYmxvY2s7XG59XG5cbi5uYW1le1xuICAgIGRpc3BsYXk6IGZsZXg7XG5cbn1cblxuXG4ubmFtZWV7XG4gICAgbWFyZ2luLWJvdHRvbTogMnB4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBsaW5lLWhlaWdodDogMjBweDtcbiAgICBmb250LXNpemU6IDE0cHg7XG5cbn1cblxuLm5hbWVlZXtcbiAgICB0ZXh0LW92ZXJmbG93OiBlbGxpcHNpcztcbiAgICBtYXgtaGVpZ2h0OiAyMHB4O1xuICAgIGxpbmUtaGVpZ2h0OiAxNHB4O1xufVxuXG4uZm9sbG93e1xuICAgIG1hcmdpbi1sZWZ0OiA2cHg7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICBib3JkZXItdG9wLXN0eWxlOiBzb2xpZDtcbiAgICBib3JkZXItdG9wLXdpZHRoOiAxcHg7XG4gICAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogOTllbTtcbiAgICBib3JkZXItdG9wLXJpZ2h0LXJhZGl1czogOTllbTtcbiAgICBib3JkZXItYm90dG9tLXJpZ2h0LXJhZGl1czogOTllbTtcbiAgICBib3JkZXItYm90dG9tLWxlZnQtcmFkaXVzOiA5OWVtO1xuICAgIGJhY2tncm91bmQtcG9zaXRpb24teDogaW5pdGlhbDtcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uLXk6IGluaXRpYWw7XG4gICAgYmFja2dyb3VuZC1zaXplOiBpbml0aWFsO1xuICAgIGJhY2tncm91bmQtYXR0YWNobWVudDogaW5pdGlhbDtcbiAgICBiYWNrZ3JvdW5kLW9yaWdpbjogaW5pdGlhbDtcbiAgICBiYWNrZ3JvdW5kLWNsaXA6IGluaXRpYWw7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDU0LCAxMzgsIDIzMSk7XG4gICAgcGFkZGluZy10b3A6IDBweDtcbiAgICBwYWRkaW5nLXJpZ2h0OiA4cHg7XG4gICAgcGFkZGluZy1sZWZ0OiA4cHg7XG4gICAgcGFkZGluZy1ib3R0b206IDFweDtcbiAgICBjb2xvcjogd2hpdGU7XG4gICAgZm9udC1zaXplOiAxM3B4O1xuICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xufVxuXG4uZGF0ZS1yZWFkdGltZXtcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xuICAgIGNvbG9yOnJnYigxMTcsIDExNywgMTE3KTtcbiAgICBsaW5lLWhlaWdodDogMjBweDtcbiAgICBmb250LXNpemU6IDE0cHg7XG4gICAgZm9udC13ZWlnaHQ6IDQwMDtcbn1cblxuLmFydGljbGUtcGFyYWdyYXBoe1xuICAgIG1hcmdpbi10b3A6IDMycHg7XG4gICAgZm9udC1zaXplOiAyMHB4O1xuICAgIGxpbmUtaGVpZ2h0OiAzMnB4O1xuICAgIGZvbnQtd2VpZ2h0OiAzMDA7XG59XG5cbi5hcnRpY2xlLWhlYWRlcntcbiAgICBtYXJnaW4tdG9wOiAzMnB4O1xuICAgIGZvbnQtc2l6ZTogMjZweDtcbiAgICBsaW5lLWhlaWdodDogNDRweDtcbiAgICBmb250LXdlaWdodDogNDAwO1xufVxuXG4uY29kZXtcbiAgICBiYWNrZ3JvdW5kLWltYWdlOiBpbml0aWFsO1xuICAgIGJhY2tncm91bmQtcG9zaXRpb24teDogaW5pdGlhbDtcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uLXk6IGluaXRpYWw7XG4gICAgYmFja2dyb3VuZC1zaXplOiBpbml0aWFsO1xuICAgIGJhY2tncm91bmQtYXR0YWNobWVudDogaW5pdGlhbDtcbiAgICBiYWNrZ3JvdW5kLW9yaWdpbjogaW5pdGlhbDtcbiAgICBiYWNrZ3JvdW5kLWNsaXA6IGluaXRpYWw7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI0MiwgMjQyLCAyNDIpO1xuICAgIG92ZXJmbG93LXg6IGF1dG87XG4gICAgd29yZC13cmFwOiBicmVhay13b3JkO1xuICAgIHdvcmQtYnJlYWs6IGJyZWFrLXdvcmQ7XG4gICAgZm9udC13ZWlnaHQ6IDMwMDtcbiAgICBcbn1cblxuXG4uY29kZS1ibG9ja3tcbiAgICBmb250LXdlaWdodDogMzAwO1xuICAgIG92ZXJmbG93LXg6IGF1dG87XG4gICAgd29yZC13cmFwOiBicmVhay13b3JkO1xuICAgIHdvcmQtYnJlYWs6IGJyZWFrLXdvcmQ7XG4gICAgZmxvYXQ6IGxlZnQ7XG4gICAgZm9udC1zaXplOiAxNHB4O1xufVxuXG4uaW5saW5lLWNvZGV7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI0MiwgMjQyLCAyNDIpO1xuXG59XG5cbi5mb2xsb3ctdHdpdHRlcntcbiAgICBtYXJnaW46IDVweCAwcHggMHB4IDVweDtcbn1cblxuLmNvbW1lbnRzIHtcbiAgICBtYXJnaW4tdG9wOiA0NHB4O1xuICAgIG1hcmdpbi1sZWZ0OiAyMCU7XG4gICAgbWFyZ2luLXJpZ2h0OjIwJTtcbn1cblxuXG5AbWVkaWEgb25seSBzY3JlZW4gYW5kIChtYXgtd2lkdGggOiA3NjhweCkge1xuICAgIC5hcnRpY2xlLWNvbnRlbnR7XG4gICAgICAgIG1hcmdpbi1sZWZ0OiA0NHB4O1xuICAgIH1cbn1cbiJdfQ== */"] });
 

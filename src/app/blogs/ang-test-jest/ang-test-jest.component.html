@@ -35,7 +35,7 @@
             <div class="header-center">
                 <p class="article-paragraph">
                     Unit testing your angular applications helps you ensure that your app is working as you expect. 
-                    Unit-testing becomes a very useful tool to integrate automatic testing as the codebase becomes large and the app becomes prone to bugs and issues. 
+                    Unit-testing becomes a very useful tool to integrate automatic testing as the codebase grows large in size and the app is prone to bugs and issues. 
                     I like unit testing because I don’t have to run the app manually and test each time I make changes in my code.  
                 </p>
 
@@ -66,7 +66,7 @@
                 <p class="article-paragraph">
                     Angular app by default comes with the Jasmine test framework and  the Angular CLI downloads and installs everything you need to test an Angular application. 
                     Both frameworks make use of Angular testing libraries and modules and there are only a few syntax differences between them. 
-                    You can find an official tutorial on testing using the Jasmine framework here. JEST seems to be liked by developers because it is faster and requires less configuration for testing angular apps. Unlike Jasmine and Karma, it does not require a browser to load the test results and it runs the tests in parallel. We can use Angular CLI to view the results and generate coverage reports.
+                    You can find an official tutorial on testing using the Jasmine framework <a href="https://angular.io/guide/testing">here</a>. JEST seems to be liked by developers because it is faster and requires less configuration for testing angular apps. Unlike Jasmine and Karma, it does not require a browser to load the test results and it runs the tests in parallel. We can use Angular CLI to view the results and generate coverage reports.
                 </p>
 
                 <p class="article-paragraph">
@@ -111,13 +111,62 @@
 
                                 
                 <p class="article-paragraph">
-                    The GroupsService getGroups() method return Observables so we must subscribe to an observable to cause it to execute and assert that method succeeds or fails.app-footer
+                    The GroupsService getGroups() method return Observables so we must subscribe to an observable to cause it to execute and assert that method succeeds or fails.
                     The test technique above does not use any Angular util. 
                     We are simply mocking HttpClient service using Jest and injecting the mock service to create GroupService.
                     So when we call the getGroups() function, it will return the mockGroupResponse that we have defined.
                     The HttpClient Get function in this test will chain the pipe function which will return the resolved promise. We can mock the function to return reject promise using Jest MockImplementation.
                     To view more about testing asynchronous code using JEST, here is the <a href="https://jestjs.io/docs/asynchronous">link</a>.
                 </p>
+
+                <p class="article-header">
+                    Testing HTTP Requests Using Angular library        
+                </p>
+
+                <p class="article-paragraph">
+                    Other interactions between the data services and the httpclient can be complex and difficult to mock with Jest mock functions.
+                    The HttpClientTestingModule can make testing other complex scenarios like POST, PUT or DELETE calls easier to test.
+                    The <code>@angular/common/http/testing</code> library makes it straightforward to set up mocking to mock the HTTP backend service so our tests can simulatealls to a remote server.
+                </p>
+
+                <p class="article-header">
+                    Setting up HttpClientTestingModule       
+                </p>
+
+                <p class="article-paragraph">
+                   To test httpclient we need to import the HttpClientTestingModule, TestBed and the mocking controller and other required library as below. 
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet3}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Then we need to setup our test environment for the service we are going to test using TestBed and add the HttpClientTestingModule to the TestBed.
+                 </p>
+
+                 <pre class="code">
+                    <code class="code-block">
+                      {{snippet4}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Now we have setup our testing environment so that the requests made in our tests hit the testing backend instead of real backend server.
+                    We are injecting httpClient service and the mocking controller using <code>TestBed.inject()</code> so we can reference them in our tests.
+                    Next we can write our unit test for getGroups method that expects a GET request and provides a mock response.
+                 </p>
+
+                 <pre class="code">
+                    <code class="code-block">
+                      {{snippet5}}
+        
+                    </code>
+                </pre>
                 
             </div>
         </div>

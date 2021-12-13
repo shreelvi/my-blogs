@@ -1570,7 +1570,7 @@ class FooterComponent {
     }
 }
 FooterComponent.ɵfac = function FooterComponent_Factory(t) { return new (t || FooterComponent)(); };
-FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: FooterComponent, selectors: [["app-footer"]], decls: 12, vars: 0, consts: [[2, "background-color", "#1976d2", "height", "60px", "padding-top", "10px"], [1, "footer-row"], ["href", "http://elvishrestha.com"], ["routerLink", "/blog1", "routerLinkActive", "active"], ["href", "https://www.github.com/shreelvi"], ["href", "http://resnology.com"], [1, "copyright"]], template: function FooterComponent_Template(rf, ctx) { if (rf & 1) {
+FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: FooterComponent, selectors: [["app-footer"]], decls: 12, vars: 0, consts: [[1, "footer"], [1, "footer-row"], ["href", "http://elvishrestha.com"], ["routerLink", "/blog1", "routerLinkActive", "active"], ["href", "https://www.github.com/shreelvi"], ["href", "http://resnology.com"], [1, "copyright"]], template: function FooterComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "a", 2);
@@ -1590,7 +1590,7 @@ FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkWithHref"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkActive"]], styles: [".footer-row[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {\n  color: #BFDBFF;\n  text-decoration: none;\n  padding-left: 44px;\n  font-size: 14px;\n}\n\n.copyright[_ngcontent-%COMP%] {\n  float: left;\n  padding-left: 40px;\n  color: #BFDBFF;\n  font-size: 14px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2Zvb3Rlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7RUFDQSxxQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtBQUNKOztBQUVBO0VBQ0ksV0FBQTtFQUNBLGtCQUFBO0VBQ0EsY0FBQTtFQUNBLGVBQUE7QUFDSiIsImZpbGUiOiJmb290ZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZm9vdGVyLXJvdyBhe1xuICAgIGNvbG9yOiAjQkZEQkZGO1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICBwYWRkaW5nLWxlZnQ6IDQ0cHg7XG4gICAgZm9udC1zaXplOiAxNHB4O1xufVxuXG4uY29weXJpZ2h0e1xuICAgIGZsb2F0OiBsZWZ0O1xuICAgIHBhZGRpbmctbGVmdDogNDBweDtcbiAgICBjb2xvcjogI0JGREJGRjtcbiAgICBmb250LXNpemU6IDE0cHg7XG59Il19 */"] });
+    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkWithHref"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkActive"]], styles: [".footer-row[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {\n  color: #BFDBFF;\n  text-decoration: none;\n  padding-left: 44px;\n  font-size: 14px;\n}\n\n.copyright[_ngcontent-%COMP%] {\n  float: left;\n  padding-left: 40px;\n  color: #BFDBFF;\n  font-size: 14px;\n}\n\n.footer[_ngcontent-%COMP%] {\n  background-color: #1976d2;\n  height: 60px;\n  padding-top: 10px;\n}\n\n.footer-row[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]:hover {\n  color: white;\n}\n\n@media only screen and (max-width: 768px) {\n  .footer-row[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {\n    display: flex;\n    flex-direction: column;\n    color: #BFDBFF;\n    text-decoration: none;\n    padding-left: 44px;\n    font-size: 14px;\n    height: 28px;\n  }\n\n  .footer-row[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]:hover {\n    color: white;\n  }\n\n  .footer[_ngcontent-%COMP%] {\n    background-color: #1976d2;\n    height: 144px;\n    padding-top: 10px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2Zvb3Rlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7RUFDQSxxQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtBQUNKOztBQUVBO0VBQ0ksV0FBQTtFQUNBLGtCQUFBO0VBQ0EsY0FBQTtFQUNBLGVBQUE7QUFDSjs7QUFFQTtFQUNJLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLGlCQUFBO0FBQ0o7O0FBRUE7RUFDSSxZQUFBO0FBQ0o7O0FBRUE7RUFDSTtJQUNJLGFBQUE7SUFDQSxzQkFBQTtJQUNBLGNBQUE7SUFDQSxxQkFBQTtJQUNBLGtCQUFBO0lBQ0EsZUFBQTtJQUNBLFlBQUE7RUFDTjs7RUFHRTtJQUNJLFlBQUE7RUFBTjs7RUFHRTtJQUNJLHlCQUFBO0lBQ0EsYUFBQTtJQUNBLGlCQUFBO0VBQU47QUFDRiIsImZpbGUiOiJmb290ZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZm9vdGVyLXJvdyBhe1xuICAgIGNvbG9yOiAjQkZEQkZGO1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICBwYWRkaW5nLWxlZnQ6IDQ0cHg7XG4gICAgZm9udC1zaXplOiAxNHB4O1xufVxuXG4uY29weXJpZ2h0e1xuICAgIGZsb2F0OiBsZWZ0O1xuICAgIHBhZGRpbmctbGVmdDogNDBweDtcbiAgICBjb2xvcjogI0JGREJGRjtcbiAgICBmb250LXNpemU6IDE0cHg7XG59XG5cbi5mb290ZXIge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMxOTc2ZDI7IFxuICAgIGhlaWdodDogNjBweDsgXG4gICAgcGFkZGluZy10b3A6IDEwcHg7XG59XG5cbi5mb290ZXItcm93IGE6aG92ZXIge1xuICAgIGNvbG9yOiB3aGl0ZTtcbn1cblxuQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoIDogNzY4cHgpIHtcbiAgICAuZm9vdGVyLXJvdyBhe1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgICAgICBjb2xvcjogI0JGREJGRjtcbiAgICAgICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgICAgICBwYWRkaW5nLWxlZnQ6IDQ0cHg7XG4gICAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgICAgaGVpZ2h0OiAyOHB4O1xuICAgICAgICBcbiAgICB9XG5cbiAgICAuZm9vdGVyLXJvdyBhOmhvdmVyIHtcbiAgICAgICAgY29sb3I6IHdoaXRlO1xuICAgIH1cblxuICAgIC5mb290ZXIge1xuICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMTk3NmQyOyBcbiAgICAgICAgaGVpZ2h0OiAxNDRweDsgXG4gICAgICAgIHBhZGRpbmctdG9wOiAxMHB4O1xuICAgIH1cbiAgICBcbn0iXX0= */"] });
 
 
 /***/ }),
@@ -1863,7 +1863,7 @@ class AngTestJestComponent {
     }
 }
 AngTestJestComponent.ɵfac = function AngTestJestComponent_Factory(t) { return new (t || AngTestJestComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["Title"])); };
-AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AngTestJestComponent, selectors: [["app-ang-test-jest"]], decls: 132, vars: 9, consts: [[1, "ang-matDialog"], ["fxFlex", "", "fxLayout", "column"], [1, "article-content"], [1, "header-center"], [1, "category"], [1, "blog-title"], [1, "author-info"], [1, "namee"], [1, "nameee"], [1, "follow-twitter"], ["href", "https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw", "data-show-count", "false", "data-show-screen-name", "false", 1, "twitter-follow-button"], [1, "date-readtime"], [1, "article-paragraph"], [1, "article-header"], ["href", "https://angular.io/guide/testing"], ["href", "https://medium.com/@nerdic.coder/how-to-use-jest-unit-tests-with-angular-87509b500158"], [1, "code"], [1, "code-block"], ["href", "https://jestjs.io/docs/asynchronous"], ["href", "https://angular.io/guide/http#testing-http-requests"], [1, "comments"], [3, "identifier"]], template: function AngTestJestComponent_Template(rf, ctx) { if (rf & 1) {
+AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AngTestJestComponent, selectors: [["app-ang-test-jest"]], decls: 127, vars: 9, consts: [[1, "ang-matDialog"], ["fxFlex", "", "fxLayout", "column"], [1, "article-content"], [1, "header-center"], [1, "category"], [1, "blog-title"], [1, "author-info"], [1, "namee"], [1, "nameee"], [1, "follow-twitter"], ["href", "https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw", "data-show-count", "false", "data-show-screen-name", "false", 1, "twitter-follow-button"], [1, "date-readtime"], [1, "article-paragraph"], [1, "article-header"], ["href", "https://angular.io/guide/testing"], ["href", "https://medium.com/@nerdic.coder/how-to-use-jest-unit-tests-with-angular-87509b500158"], [1, "code"], [1, "code-block"], ["href", "https://jestjs.io/docs/asynchronous"], ["href", "https://angular.io/guide/http#testing-http-requests"], [1, "comments"], [3, "identifier"]], template: function AngTestJestComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "article", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -2029,34 +2029,27 @@ AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](112, " more about Angular Http Testing Module ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](113, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](114, " We can also make custom request expectations like making assertions and checking that the request has certain header. We can also handle more than one requests in a method. ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "a", 19);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](116, "Learn");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](113, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](114, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](116);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](117, " more about Angular Http Testing Module ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](117, "\n                ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](118, "pre", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "code", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](121);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](118, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, " And to test for the scenario when HTTP request fails we can use the testing controller to flush and respond with mock error. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](122, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](121, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](123);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](123, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](124, " And to test for the scenario when HTTP request fails we can use the testing controller to flush and respond with mock error. ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](125, "pre", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](126, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "code", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](128);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](129, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](124, "\n                ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](130, "div", 20);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](131, "disqus", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](125, "div", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](126, "disqus", 21);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2073,7 +2066,7 @@ AngTestJestComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet4, "\n        \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet5, "\n        \n                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](10);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet5, "\n        \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet7, "\n        \n                    ");

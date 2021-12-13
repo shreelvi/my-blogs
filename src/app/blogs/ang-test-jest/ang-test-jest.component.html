@@ -7,7 +7,7 @@
                 </h2>
                 <div>
                     <h1 class="blog-title">
-                        Unit Testing Angular Services and Components Using JEST Framework (Part1)                  
+                        Unit Testing Angular Services and Components Using JEST (Part1)                  
                     </h1>
                 </div>
                 <div class="author-info">
@@ -36,7 +36,7 @@
                 <p class="article-paragraph">
                     Unit testing your angular applications helps you ensure that your app is working as you expect. 
                     Unit-testing becomes a very useful tool to integrate automatic testing as the codebase grows large in size and the app is prone to bugs and issues. 
-                    I like unit testing because I don’t have to run the app manually and test each time I make changes in my code.  
+                    I like unit testing because I don’t have to run the app manually and test each time I make changes in my code and make sure all the code is working as expected.
                 </p>
 
                 <p class="article-header">
@@ -55,8 +55,8 @@
                     Similarly, services in angular often depend on other services which are injected in their constructor. So, in order to test the angular component/ services we will require a similar setup for creating components with its dependencies.                 </p>
                 
                 <p class="article-paragraph">
-                    Angular provides the TestBed class to set up testing environments for components. 
-                    We will see more detail on this as we test our component. Angular also provides utilities and libraries to test for service dependencies and HttpCalls.
+                    Angular provides the TestBed class to set up testing environments for components/services. 
+                    We will see more detail on this as we begin testing using the library. Angular also provides utilities and libraries to test for service dependencies and HttpCalls.
                 </p>
 
                 <p class="article-header">
@@ -73,18 +73,13 @@
                     This tutorial requires that you have a JEST framework configured as you have to install it manually and <a href="https://medium.com/@nerdic.coder/how-to-use-jest-unit-tests-with-angular-87509b500158">here</a> 
                     is one of the guides which can help you with set up. 
                 </p>
-                
-                <p class="article-paragraph">
-                    Angular provides the TestBed class to set up testing environments for components. 
-                    We will see more detail on this as we test our component. Angular also provides utilities and libraries to test for service dependencies and HttpCalls.
-                </p>
 
                 <p class="article-header">
                     Testing HTTP Services        
                 </p>
 
                 <p class="article-paragraph">
-                    For this tutorial, we are going to test the service that is only dependent on HttpClient to call the api. 
+                    For this tutorial, we are going to test the service that is only dependent on HttpClient to call the API. 
                     So we will see how we can test the Http services. 
                     I will show you two different ways to test it. First, we will see how we can mock the HttpClient get method to return a rxJS promise with  a group response. The service we are going to test is given below.
                 </p>
@@ -108,22 +103,39 @@
         
                     </code>
                 </pre>
-
-                                
+                    
                 <p class="article-paragraph">
                     The GroupsService getGroups() method return Observables so we must subscribe to an observable to cause it to execute and assert that method succeeds or fails.
                     The test technique above does not use any Angular util. 
                     We are simply mocking HttpClient service using Jest and injecting the mock service to create GroupService.
+                    
+                </p>
+
+                <p class="article-paragraph">
                     So when we call the getGroups() function, it will return the mockGroupResponse that we have defined.
-                    The HttpClient Get function in this test will chain the pipe function which will return the resolved promise. We can mock the function to return reject promise using Jest MockImplementation.
+                    The HttpClient Get function in this test will chain the pipe function which will return the resolved promise. If we want to test for error case then we can mock the function to return rejected promise using Jest MockImplementation.
                     To view more about testing asynchronous code using JEST, here is the <a href="https://jestjs.io/docs/asynchronous">link</a>.
                 </p>
+
+                <p class="article-paragraph">
+                    In the same way, we can use Jest mocking to mock for error response. 
+                    First, we create the mock error response and implement the httpClient to return rejected promise with the error. 
+                    The test case for an 404 error scenario can be written as.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet6}}
+        
+                    </code>
+                </pre>
 
                 <p class="article-header">
                     Testing HTTP Requests Using Angular library        
                 </p>
 
                 <p class="article-paragraph">
+                    Another way to test the Angular service is using the Angular modules/libraries.
                     Other interactions between the data services and the httpclient can be complex and difficult to mock with Jest mock functions.
                     The HttpClientTestingModule can make testing other complex scenarios like POST, PUT or DELETE calls easier to test.
                     The <code>@angular/common/http/testing</code> library makes it straightforward to set up mocking to mock the HTTP backend service so our tests can simulatealls to a remote server.
@@ -161,9 +173,43 @@
                     Next we can write our unit test for getGroups method that expects a GET request and provides a mock response.
                  </p>
 
+                 <p class="article-paragraph">
+                    Testing using Angular library runs in a slightly different pattern of testing. First, we make request call to the real service.
+                    Then, we make expectations that certain requests have been made, assert the expected response. 
+                    And finally, we provide mock responses to return when the service is called by using "flush" method.
+                 </p>
+
                  <pre class="code">
                     <code class="code-block">
                       {{snippet5}}
+        
+                    </code>
+                </pre>
+
+                 <p class="article-paragraph">
+                    We can also make custom request expectations like making assertions and checking that the request has certain header. We can also handle more than one requests in a method. 
+                    <a href="https://angular.io/guide/http#testing-http-requests">Learn</a> more about Angular Http Testing Module
+                 </p>
+
+                 <p class="article-paragraph">
+                    We can also make custom request expectations like making assertions and checking that the request has certain header. We can also handle more than one requests in a method. 
+                    <a href="https://angular.io/guide/http#testing-http-requests">Learn</a> more about Angular Http Testing Module
+                 </p>
+
+                 <pre class="code">
+                    <code class="code-block">
+                      {{snippet5}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    And to test for the scenario when HTTP request fails we can use the testing controller to flush and respond with mock error.
+                 </p>
+
+                 <pre class="code">
+                    <code class="code-block">
+                      {{snippet7}}
         
                     </code>
                 </pre>

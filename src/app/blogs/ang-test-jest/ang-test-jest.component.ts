@@ -137,24 +137,58 @@ snippet5 = `
   it('can test HttpClient.get', async() => {      
     // Make an HTTP GET request
     const response =  groupsDemoService.getGroups();
+
+    // Make assertion that response data  will be mock data after subscribing to the observable
     response.subscribe(data => 
+      // When observable resolves, result should match test data
         expect(data).resolves.toBe(mockGroupsResponse));
-    //expect(response).resolves.toBe(mockGroupsResponse);
 
     // The following expectOne() will match the request's URL.
-    // If no requests or multiple requests matched that URL
-    // expectOne() would throw.
+    // Throws error if no/multiple match is found
     const req = httpTestingController.expectOne('https://localhost:5001/api/group')
+
     expect(req.request.method).toEqual('GET');
 
-    // Respond with mock data, causing Observable to resolve.
-    // Subscribe callback asserts that correct data was returned.
+    // Mock the groupsResponse data when the req is called
     req.flush(mockGroupsResponse);
         
     // Finally, assert that there are no outstanding requests.
     httpTestingController.verify();
   });
 `
+
+snippet6 = `
+  it('should return an error when the server returns a 404', async() => {
+    const mockErrorResponse = new HttpErrorResponse({
+        error: 'test 404 error',
+        status: 404, statusText: 'Not found'
+    });
+    const mockObservable = {
+        pipe: () => Promise.reject(mockErrorResponse)
+    }
+    httpClientMock.get.mockImplementation(() => mockObservable)
+
+    await expect(groupsDemoService.getGroups()).rejects.toBe(mockErrorResponse);
+  })
+`
+snippet7 = `
+  it('can test for 404 error', () => {
+    const emsg = 'deliberate 404 error';
+
+    const response =  groupsDemoService.getGroups();
+    response.subscribe(data => fail('should have failed with the 404 error'),
+    (error: HttpErrorResponse) => {
+      expect(error.status).toEqual(404);
+      expect(error.error).toEqual(emsg);
+    });
+
+    const req = httpTestingController.expectOne('https://localhost:5001/api/group');
+
+    // Respond with mock error
+    req.flush(emsg, { status: 404, statusText: 'Not Found' });
+  })
+`
+
 constructor(private title: Title) { 
   this.title.setTitle('Blogs | Testing Angular HTTP Service calls using JEST')
   this.loadScripts();

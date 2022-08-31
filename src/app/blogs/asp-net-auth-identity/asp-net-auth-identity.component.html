@@ -1,0 +1,140 @@
+
+<article class="ang-matDialog">
+    <div fxFlex fxLayout="column">
+        <div class="article-content">
+            <div class="header-center">
+                <h2 class="category">
+                    ASP.NET tutorial
+                </h2>
+                <div>
+                    <h1 class="blog-title">
+                        Authentication and Authorization on ASP.NET Core Web API with Angular SPA using Identity (JWT Token)
+                    </h1>
+                </div>
+                <div class="author-info">
+                    <div fxFlex fxLayout="column">
+                        <div class="namee">
+                            <span class="nameee">
+                                Elvis Shrestha
+                            </span>
+                            
+                            <span class="follow-twitter">
+                                <a href="https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow</a>                      
+                            </span>
+                        </div>
+                        <div class="date-readtime">
+                            Aug 20 &nbsp; 2022
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+
+        <div class="article-content">
+            <div class="header-center">
+                <p class="article-paragraph">
+                    Securing our application to allow access to users with proper credentials is an important part of an application development.
+                    To do this our app needs to authenticate users successfully. Authentication is a process that involves user providing credentials and the app comparing to those stored in a database.
+                    
+                </p>
+                <p class="article-paragraph">
+                    If the credentials matches, users are authenticated and can access the resources they have Authorization. 
+                    This process of determining if user is allowed to perform certain action is Authorization.
+                    
+                    ASP.NET Core provides built in identity providers library to secure ASP.NET Core apps including with SPAs -- Angular, React and other tools like third-party identity services to login using social identities such as Facebook, Twitter and LinkendIn.                
+
+                </p>
+                <p class="article-paragraph">
+                    This tutorial will show you how to configure sign-in with ASP.NET Identity in an existing ASP.NET Core Web API SPA with Angular on the front-end. 
+                    We will implement a JWT token based login and use Identity libraries(NuGet) and some of its features to handle authentication and authorization in our application. 
+
+                </p>
+                
+                <p class="article-paragraph">
+                    The <a href="#">source code </a> for this tutorial can be accessed on Github
+                </p>
+
+                <p class="article-header">
+                    Identity on ASP.NET Core
+                </p>
+
+                <p class="article-paragraph">
+                    ASP.NET Core Identity is an API that supports user interface (UI) login functionality. Its going to be responsible 
+                    for allowing new users to register and login to our application with proper credentials. Identity manages users, passwords (string hash password), profile data,
+                    roles, claims, tokens, email confirmation, social logins and more. 
+
+                </p>
+
+                <p class="article-paragraph">
+                    We are going to use only some part of it, issue special JWT tokens to our clients so that they can use to authenticate against our application. 
+
+                </p>
+
+                <p class="article-paragraph">
+                    For more information on ASP.NET Identity, see this <a href="https://docs.microsoft.com/en-us/aspnet/identity/overview/getting-started/introduction-to-aspnet-identity">link</a> 
+                </p>
+
+                <p class="article-header">
+                    Setting up Identity 
+                </p>
+
+
+                <p class="article-paragraph">
+                    First we need to install all the packages for ASP.NET Identity and generating JWT Bearer token so that we can implement the Authentication using OpenID/OAuth 2.0 token and Asp.Net core Identity.
+                    Following packages are required in our application: Also we need to configure our application to use 'Microsoft.EntityFrameworkCore.Sql' package to connect to our SQL database with EF Core.
+
+                </p>
+
+                <ul>
+                    <li>
+                        <a href="http://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/">Microsoft.AspNetCore.Identity.EntityFrameworkCore</a>
+                        <p>
+                            This package has the Entity Framework core implementation of ASP.NET Identity core and it will persist the ASP.NET Identity data and schema to SQL Server.
+                        </p>
+                    </li>
+
+                    <li>
+                        <a href="http://www.nuget.org/packages/Microsoft.AspNetCore.Identity/">Microsoft.AspNetCore.Identity</a>
+                        <p>
+                            This ASP.NET Core Identity package is the membership system for building ASP.NET Core web apps. It allows you to add login features to your application and manager the app users.
+                        </p>
+                    </li>
+
+                    <li>
+                        <a href="http://www.nuget.org/packages/Microsoft.IdentityModel.Tokens/">Microsoft.IdentityModel.Tokens</a>
+                        <p>
+                            This package includes types that provide support for SecurityTokens, Cryptographic operations such as Signing, Verifying Signatures, Encryption.                        
+                        </p>
+                    </li>
+
+                    <li>
+                        <a href="http://www.nuget.org/packages/System.IdentityModel.Tokens.JWT/">System.IdentityModel.Tokens.JWT</a>
+                        <p>
+                            This includes types that provide support for creating, serializing and validating JSON Web Tokens.                        
+                        </p>
+                    </li>
+                    <li>
+                        <a href="http://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer/">Microsoft.AspNetCore.Authentication.JwtBearer</a>
+                        <p>
+                            This package is a ASP.NET Core middleware that enables an application to receive an OpenID Connect bearer token.                        
+                        </p>
+                    </li>
+                    <li>
+                        <a href="http://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.OpenIdConnect/">Microsoft.AspNetCore.Authentication.OpenIdConnect</a>
+                        <p>
+                            ASP.NET Core middleware that provide support to the OpenID Connect authentication workflow in ASP.NET Core applications.                       
+                        </p>
+                    </li>
+                    
+                    
+                </ul>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</article>

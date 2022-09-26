@@ -14,25 +14,43 @@
 <div fxFlex fxLayout="row" class="main-article-container">
   <div class="article-img">
     <a routerLink="/blog4" routerLinkActive="active">
-      <img class="main-img" src="assets/blog-4.png" alt="blog" width="600" height="300" role="presentation">
+      <img class="main-img" src="assets/Auth.png" alt="blog" width="600" height="300" role="presentation">
     </a>
   </div>
 
   <div class="article-info">
-    <a routerLink="/blog4" routerLinkActive="active">
+    <a routerLink="/asp-net-auth" routerLinkActive="active">
       <h1 class="info-title" style="color: black;">
-        Unit Testing Angular Services and Components Using JEST Framework (Part1)
+        Implementing JWT Token based Authentication using ASP.NET Core Identity 
       </h1>
     </a>
 
     <p class="blog-desc">
-      This JEST testing tutorial will offer techniques and tips on how to write unit tests for the service class in
-      Angular using Jest framework.
+      This guide will show you how we can implement JWT based authentication which is very popular among modern applications and SPAs in ASP.NET Core using Identity.
+      We will use Identity to manager users (register and sign-in users), and create JWT based token that our client and several other applications can use to access the server.
     </p>
   </div>
 </div>
 
 <div class="list-container">
+
+  <a routerLink="/blog4" routerLinkActive="active">
+    <mat-card class="example-card">
+
+      <img mat-card-image src="assets/blog-4.png" alt="Jest testing">
+      <mat-card-content class="card-content">
+        <h1 class="list-title">
+          Unit Testing Angular Services and Components Using JEST Framework (Part1)
+        </h1>
+        <p class="blog-desc">
+          This <i>JEST testing tutorial</i> will offer techniques and tips on how to write unit tests for the service class in
+      Angular using Jest framework.
+        </p>
+      </mat-card-content>
+
+    </mat-card>
+  </a>
+
   <a routerLink="/blog1" routerLinkActive="active">
     <mat-card class="example-card">
 
@@ -68,6 +86,9 @@
     </mat-card>
   </a>
 
+</div>
+
+<div class="list-container">
   <a routerLink="/blog3" routerLinkActive="active">
     <mat-card class="example-card">
 
@@ -84,5 +105,4 @@
 
     </mat-card>
   </a>
-
 </div>

@@ -18,6 +18,7 @@ import { AutoFocusDirective } from './auto-focus.directive';
 import { SuperWifiArticleComponent } from './blogs/super-wifi-article/super-wifi-article.component';
 import { DisqusModule } from 'ngx-disqus';
 import { AngTestJestComponent } from './blogs/ang-test-jest/ang-test-jest.component';
+import { AspNetAuthIdentityComponent } from './blogs/asp-net-auth-identity/asp-net-auth-identity.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AngTestJestComponent } from './blogs/ang-test-jest/ang-test-jest.compon
     FooterComponent,
     AutoFocusDirective,
     SuperWifiArticleComponent,
-    AngTestJestComponent
+    AngTestJestComponent,
+    AspNetAuthIdentityComponent
   ],
   imports: [
     AngularMaterialModule,

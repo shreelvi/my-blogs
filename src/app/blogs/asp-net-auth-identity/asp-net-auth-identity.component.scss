@@ -1,0 +1,13 @@
+.userTable_img{
+    height: 200px; 
+    width: 700px;
+}
+
+
+@media only screen and (max-width : 768px) {
+    .userTable_img{
+        height: 170px; 
+        width: 440px;
+    }
+
+}

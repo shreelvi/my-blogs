@@ -53,7 +53,7 @@
                 </p>
                 
                 <p class="article-paragraph">
-                    The <a href="#">source code </a> for this tutorial can be accessed on Github
+                    The <a href="https://github.com/shreelvi/JWT-Authentication-ASPNetCore" target="_blank">source code </a> for this tutorial can be accessed on Github
                 </p>
 
                 <p class="article-header">
@@ -68,8 +68,9 @@
                 </p>
 
                 <p class="article-paragraph">
-                    We are going to use only some part of it, issue special JWT tokens to our clients so that they can use to authenticate against our application. 
-
+                    In our application, we will use ASP.NET Core Identity to manager the user accounts. It will be reposinsible for allowing us to register a new user and allow the user to login to our app.
+                    It also easily allows us to secure the user password with string hash. In addition, we can use the identity for other things such as social logins and more.
+                    We are going to use only some part of it, managing users and issue special JWT tokens to our clients so that they can use to authenticate against our application. 
                 </p>
 
                 <p class="article-paragraph">
@@ -130,6 +131,281 @@
                     
                     
                 </ul>
+
+                <p class="article-header">
+                    Identity Classes and Identity DbContext
+                </p>
+
+                <p class="article-paragraph">
+                    The Identity package we installed provides us with a IdentityUser class that we can utilize for our application users. It has lots different fields or properties including password hash, timestamp we can use in our app to capture a detail about users.
+                    We will add a class AppUser in our application inside the directory Core/Entities which will derive from the IdentityUser. AppUser class contains additional fields like DisplayName and Address about the Users that we can store. The AppUser and Address will have a one-to-one relationship. 
+                </p>
+
+                <p class="article-paragraph">
+                    Next, we will add a DbContext for managing Identity related data in our database. The IdentityDbContext will be different from our ApplicationDbContext that we will use for our application related data, and it will derive from the IdentityDbContext class provided by the Identity.
+                    Like our application DbContext, this will allows us to query the identity related data and the database will contain different Identity tables. 
+                    We will add a constructor in IdentityDbContext class and pass a option field that will derive from base class. 
+                    We need to specify AppIdentiyDbContext in our constructor option property as we have two different DbContext.
+                </p>
+
+                <p class="article-paragraph">
+                    Then, we will add this as a service in the Startup.cs class so we can use the IdentityDbContext as a service as needed in our application. 
+                    And configure it by providing database connection string. So, we will modify our startup class as below and we will also add a connection string for the Identity Db in the appsettings.json file.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet1}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    App Settings for the SqlLite database.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet3}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Also, we have to pass our AppUser class to the IdentityDbContext so that it will create the AppUser table.
+                    So, the AppIdentiyDbContext class will look like this.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet2}}
+        
+                    </code>
+                </pre>
+
+
+                <p class="article-header">
+                    Setup Identity Database
+                </p>
+
+                <p class="article-paragraph">
+                    Now that we have our DbContext for the Identity setup in our application, we will need to setup the Identity database.
+                    To do this, we will add a new migration for Identity which will create the database and seed the database with an Example user to work with.
+                    As we can see in the Startup class, we are using the SqlLite database, as it is simpler and good for testing. 
+                    This can be changed to any database based on preference, to work with Identity.
+                </p>
+
+                <p class="article-paragraph">
+                    So, to create a new migration we will run the following command in the dotnet CLI.
+                    We need to specify the Identity Context using -c annotation, to use for migration as we have two different DbContext in our application.
+                    And we can specify the output directory where we want our migration files to be added. In this case we have specified to have it as seperate folder from our AppdbContext, under Identity/Migrations.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet4}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    After running this command, we can see the new migration files that are added and examine different Identity tables with their properties in the 2022..._IdentityInitial.cs file.
+                </p>
+
+                <p class="article-paragraph">
+                    We will work with a sample user to test our Identity Authentication so now we need to seed our Identity database with the example user.
+                    Adding a AppIdentityDbContextSeed under the same directory as AppIdentityDbContext.cs, Identity/Migration, will seed our Identity database with the test user.
+                </p>
+
+                <p class="article-paragraph">
+                    AppIdentityDbContextSeed.cs file
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet5}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    In the seed file, we are using Identity services such as UserManager to create a new user and seed our db.
+                    In order to use this Identity service and other identity services in our application, we need to configure our startup class with the require identity services.
+                    So we will modify our startup class. Our identity configuration can get large so its a good practice to make use of extension class for startup.
+                    We will use an extension class to include the Identity related configuration such as configuring Identity system with our AppUser, signInManager and using EF for datastore.
+                </p>
+
+                <p class="article-paragraph">
+                    The extension class for Identity related services.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet7}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Then we will pass this class to our startup file.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet8}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-header">
+                    Account Controller with Login and Register
+                </p>
+
+                <p class="article-paragraph">
+                    Now that we have setup the identity related services, we can create the Identity database based on our initial migration and seed the db with the sample user as in AppIdentityContextSeedFile.
+                    To do this, we will need to modify our program class.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet9}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    We can see in the above program file, we have modified the main method to use logger using Microsoft.Logging to address issues while seeding the databases.
+                    We also have two databases, one for the Application, StoreContext and IdentityDbContext for identity. So we have created seperate migrations and seed the identity related data based on the IdentitySeed file.
+                </p>
+
+                <p class="article-paragraph">
+                    With the Identity related configuration and database setup/seeding in place, we can run our application using dotnet cli, to apply the identity related migrations and create the identity database with seed data.
+                </p>
+
+                <p class="article-paragraph">
+                    After running the app, we should see the SqlLite Identity database is added on the root directory. This can be accessed using SqlLite Explorer in VsCode.
+                    We can see all the identity related tables and the AspNetUser table with the seed user data. The AspNetUser table will look like below. It will contain all the identity properties from IdentityUser class such as PasswordHash, TwoFactorEnabled, EmailConfirmed and other properties.
+                </p>
+
+                <img src="assets/AspNetUser-table.png" class="userTable_img" alt="User">
+
+                <p class="article-paragraph">
+                    So far we have completed setting up the application to use Identity and configured the database with initial migration/schema.
+                    Great, Now we are ready to add API endpoints for users account register and login. 
+                    Let us add an AccountController in our application with two POST methods to allow users to register and login to our app.
+                    We will leave the token creation for now and come back to it later. So, the AccountController is going to look like below.
+
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet10}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    Our AccountController is dependent on UserManager and SignInManager from Identity so we have passed those as a parameter in our constructor.
+                    These dependencies are responsible in our application to find users that are registered in our db using their email, and signInManager is responsible to verify the user password that is provided in login.
+                    As we can see in the Login method above, signInManager.CheckPasswordSignInAsync, we are passing password in parameters including false for lockoutOnFailure property. 
+                    This property can be used to lockout users on multiple attempts with incorrect password. We will not use this Identity feature so just set it to false.
+                    We are passing a sample token to our client apps to access our API resources for now, which we will change it to real token.
+                </p>
+
+                <p class="article-paragraph">
+                    We should be able to login to our application with a seed user we created earlier. Testing the Login method using Postman will give us the following success result.
+                </p>
+
+                <img src="assets/Auth2.png" class="userTable_img" alt="User">
+
+                <p class="article-paragraph">
+                    Similarly, using the Identity built in methods, we can create a POST Register method to allow users to register to use our app.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet11}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    After adding a user using the above Register method, we should be able to login with the user we registered.
+                </p>
+
+                <img src="assets/Auth3.png" class="userTable_img" alt="User">
+
+                <p class="article-header">
+                    Generating a JWT Token
+                </p>
+
+                <p class="article-paragraph">
+                    Now we will add a functionality to create a JSON Web token and pass it to client applications. 
+                    JWT tokens are encoded string which is not human readable and we can decode a JWT token and view information about a user and token. 
+                    We can use the JWT.IO website to decode a JWT token and it will display a result from the token that can be read.
+                    
+                </p>
+
+                <p class="article-paragraph">
+                    According to the website jwt.io, JSON web tokens are an open, industry standard for representing claims securely between two parties.
+                    It contains claims about users that the server will add when generating a token. Claims contain basic information such as username, token issued date etc. and a signature generated by a server.
+                    These claims can be later verified by the server when a client request access to the server app. 
+                    The decoded token will contain information in three parts - Header which is Algorithm and Token type, Payload -- Claim about users and data, and a Signature.
+                    The signature will be created by the server and it will be used later to verify the token using a symmetric key.
+                    The same symmetric key will be used to encode and decode the token.
+                </p>
+
+                <p class="article-paragraph">
+                    To create a jwt token, we will add an ITokenService and TokenService in our application which will handle the token creation.
+                    The code for the service will look like below. In the CreateToken method we can see that we have added claims about users and created a signature using our token key from the config.
+                    We have also added a token validity time and issuer information.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet12}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-header">
+                    Verifying token 
+                </p>
+
+                <p class="article-paragraph">
+                    Next, we will modify the startup extension class for Identity, IdentityServiceExtension. 
+                    This extension will start all the required identity services. 
+                    Here, we can also add Identity Authentication service. 
+                    In the code, we have configured it to use JWT Bearer defaults scheme and added a way to validate a token passed by clients.
+                    we are using the token key and token issuer to verify the signature and the server. 
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet12}}
+        
+                    </code>
+                </pre>
+
+                <p class="article-paragraph">
+                    After configuring the Identity authentication service, we need to use the authentication middleware in our application based on the configuration.
+                    So, we added app.UseAuthentication() just before Authorization middleware in our Startup class.
+                    We will also need to add the Token key and Issuer in our config, appsettings.json file as we are using them to create and verify the token.
+                </p>
+
+                <p class="article-paragraph">
+                    That's it! We have added all the code to implement JWT token based Authentication in our application.
+                    We are ready to test the Authentication feature now. After user is logged in successfully, s/he should recieve a JWT token from our server.
+                    This token should be successfully verified.
+                </p>
+
+
+                <div class="comments">
+                    <disqus [identifier]="pageId"></disqus>
+                </div>
+
+
+
 
 
             </div>

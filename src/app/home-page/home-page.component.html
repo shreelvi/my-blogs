@@ -10,29 +10,44 @@
 
   <br>
 </div>
-
 <div fxFlex fxLayout="row" class="main-article-container">
   <div class="article-img">
-    <a routerLink="/blog4" routerLinkActive="active">
-      <img class="main-img" src="assets/Auth.png" alt="blog" width="600" height="300" role="presentation">
+    <a routerLink="/asp-net-uiajax" routerLinkActive="active">
+      <img class="main-img" src="assets/blog-data.png" alt="blog" width="600" height="300" role="presentation">
     </a>
   </div>
 
   <div class="article-info">
-    <a routerLink="/asp-net-auth" routerLinkActive="active">
-      <h1 class="info-title" style="color: black;">
-        Implementing JWT Token based Authentication using ASP.NET Core Identity 
+    <a routerLink="/asp-net-uiajax" routerLinkActive="active">
+      <h1 class="info-title" style="color: black;">Working With Data in ASP.NET CORE MVC Search with EF Core and JQuery AJAX
       </h1>
     </a>
 
     <p class="blog-desc">
-      This guide will show you how we can implement JWT based authentication which is very popular among modern applications and SPAs in ASP.NET Core using Identity.
-      We will use Identity to manager users (register and sign-in users), and create JWT based token that our client and several other applications can use to access the server.
+      In this multi-part tutorial series, we will see how we can work with data in ASP.NET Core MVC with EF and list and present 
+      the data in the client-side by making use of JQuery and Ajax to provide great user experiences. It has multiple parts and 
+      follows the old Microsoft Tutorials which is based on ASP.NET Web forms. We will see different scenarios and work with data in master/admin case.
     </p>
   </div>
-</div>
+</div>  
 
 <div class="list-container">
+  <a routerLink="/asp-net-auth" routerLinkActive="active">
+    <mat-card class="example-card">
+
+      <img mat-card-image src="assets/Auth.png" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <h1 class="list-title">
+          Implementing JWT Token based Authentication using ASP.NET Core Identity 
+        </h1>
+        <p class="blog-desc">
+          This guide will show you how we can implement JWT based authentication which is very popular among modern applications and SPAs in ASP.NET Core using Identity.
+      We will use Identity to manager users (register and sign-in users), and create JWT based token that our client and several other applications can use to access the server.
+        </p>
+      </mat-card-content>
+
+    </mat-card>
+  </a>
 
   <a routerLink="/blog4" routerLinkActive="active">
     <mat-card class="example-card">
@@ -69,6 +84,9 @@
     </mat-card>
   </a>
 
+</div>
+
+<div class="list-container">
   <a routerLink="/angular-directive-blog" routerLinkActive="active">
     <mat-card class="example-card">
 
@@ -86,9 +104,6 @@
     </mat-card>
   </a>
 
-</div>
-
-<div class="list-container">
   <a routerLink="/blog3" routerLinkActive="active">
     <mat-card class="example-card">
 

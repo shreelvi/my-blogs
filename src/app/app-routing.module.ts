@@ -10,7 +10,9 @@ const routes: Routes = [
   { path: 'blog3', loadChildren: () => import('./blogs/super-wifi-article/super-wifi-article.module').then(m => m.SuperWifiArticleModule) },
   { path: 'blog4', loadChildren: () => import('./blogs/ang-test-jest/ang-test-jest.module').then(m => m.AngTestJestModule) },
   { path: 'test-table', loadChildren: () => import('./test-product-component/test-product.module').then(m => m.TestProductModule) },
-  { path: 'asp-net-auth', loadChildren: () => import('./blogs/asp-net-auth-identity/asp-net-auth-identity.module').then(m => m.AspNetAuthIdentityModule)}
+  { path: 'asp-net-auth', loadChildren: () => import('./blogs/asp-net-auth-identity/asp-net-auth-identity.module').then(m => m.AspNetAuthIdentityModule)},
+  { path: 'asp-net-uiajax', loadChildren: () => import('./blogs/aspnet-uiajax/aspnet-uiajax.module').then(m => m.AspNetUiAjaxModule)}
+
 
 ];
 

@@ -19,6 +19,7 @@ import { SuperWifiArticleComponent } from './blogs/super-wifi-article/super-wifi
 import { DisqusModule } from 'ngx-disqus';
 import { AngTestJestComponent } from './blogs/ang-test-jest/ang-test-jest.component';
 import { AspNetAuthIdentityComponent } from './blogs/asp-net-auth-identity/asp-net-auth-identity.component';
+import { AspNetUIAjaxComponent } from './blogs/aspnet-uiajax/aspnet-uiajax.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AspNetAuthIdentityComponent } from './blogs/asp-net-auth-identity/asp-n
     AutoFocusDirective,
     SuperWifiArticleComponent,
     AngTestJestComponent,
-    AspNetAuthIdentityComponent
+    AspNetAuthIdentityComponent,
+    AspNetUIAjaxComponent
   ],
   imports: [
     AngularMaterialModule,

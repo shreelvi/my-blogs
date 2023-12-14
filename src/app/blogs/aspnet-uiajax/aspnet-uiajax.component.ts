@@ -189,6 +189,91 @@ snippet6 = `
 ]
 `
 
+snippet7 = `
+  private readonly ILogger<HomeController> _logger;
+    private readonly StoreContext _context;
+
+    public HomeController(ILogger<HomeController> logger, StoreContext context)
+    {
+        _logger = logger;
+        _context = context;
+    }
+
+    public IActionResult Index()
+    {
+        MasterDetailViewModel vm = new MasterDetailViewModel();
+        //vm.Categories = new List<string>() { "Beverages", "Condiments", "Confections", "Dairy Products", "Grains/Cereals", "Meat/Poultry", "Produce", "Seafood" };
+
+        vm.ProductTypes = _context.ProductTypes.ToList();
+        vm.ProductBrands = _context.ProductBrands.ToList();
+
+        vm.Products = _context.Products.ToList();
+        vm.CatDDL = new List<SelectListItem>();
+
+        for (int i = 0; i < vm.ProductTypes.Count; i++)
+        {
+            vm.CatDDL.Add(new SelectListItem() { Text = vm.ProductTypes[i].Name, Value = vm.ProductTypes[i].Id.ToString() });
+        }
+        return View(vm);
+    }
+`
+
+snippet8 = `
+      <div class="d-flex flex-column justify-content-between">
+            <h4 class="mb-4" style="letter-spacing: 0.07rem;">View Products By Category</h4>
+            <div class="d-flex justify-content-start">
+                <p>Select a Category.</p>
+                <select asp-for="Category" asp-items="Model.CatDDL" id="catDDL"></select>
+            </div>
+        </div>
+`
+
+snippet9 = `
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Product
+                    </th>
+                    <th>
+                        Product Type
+                    </th>
+                    <th>
+                        Product Brand
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductType.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductBrand.Name)
+                        </td>
+                        <td>
+                            $@Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><div class='fa fa-edit'></div></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><div class='fa fa-info'></div></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id"><div class='fa fa-trash'></div></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+`
+
   constructor(private title: Title) {
     this.title.setTitle('Blogs | Angular Attribute Directives Article')
     this.loadScripts();

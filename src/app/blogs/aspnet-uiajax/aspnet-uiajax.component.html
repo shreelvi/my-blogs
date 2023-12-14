@@ -143,9 +143,47 @@
                     </code>
                 </pre>
 
-                
+                <p class="article-header">
+                    Basic Reporting with Dropdown filter
+                </p>
 
-                
+                <p class="article-paragraph">
+                    After setting up the data layer, we can see now how we can create a basic reporting and filter the report
+                    using a dropdown, and we will use Jquery AJAX to filter data and make a call to our controller and update the table with the updated response.
+                    Replace the index method of home page with the below code: 
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet7}}  
+                    </code>
+                </pre>
+                <p class="article-paragraph">
+                    We will pass the list of SelectListItem object which will contain the dropdown values and text for the Product brand with its ID.
+                    This can be passed as a viewbag but we will use a viewmodel class for our view to store its related data like int property for dropdown selection, selectlistitem list etc. This list is used in our view for displaying the dropdown filter.
+                    We can then use HTML Select element with ASP.NET HTML tab asp-for and asp-items to fill the dropdown box as shown below:
+                </p>
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet8}}  
+                    </code>
+                </pre>
+                <p class="article-paragraph">
+                    The products data is displayed in our view using the bootstrap table.
+                </p>
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet9}}  
+                    </code>
+                </pre>
+                <p class="article-paragraph">
+                    The complete view for our example will look like this image.
+                </p>
+
+                <div class="article-img">
+                    <img src="assets/blog-data.png" alt="dialog box" style="width: 100%;  height: 80%;"role="presentation">
+                </div>
+
             </div>
 
         </div>

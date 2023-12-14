@@ -1589,6 +1589,29 @@ class AspNetUIAjaxComponent {
             </tbody>
         </table>
 `;
+        this.snippet10 = `
+async Task SeedDatabaseAsync()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+        try
+        {
+            var context = services.GetRequiredService<StoreContext>();
+            await context.Database.MigrateAsync();
+            await StoreContextSeed.SeedAsync(context, loggerFactory);
+
+        }
+        catch (Exception ex)
+        {
+            var logger = loggerFactory.CreateLogger<Program>();
+            logger.LogError(ex, "An error occured during migration");
+        }
+    }
+
+}
+`;
         this.title.setTitle('Blogs | Angular Attribute Directives Article');
         this.loadScripts();
     }
@@ -1609,7 +1632,7 @@ class AspNetUIAjaxComponent {
     }
 }
 AspNetUIAjaxComponent.ɵfac = function AspNetUIAjaxComponent_Factory(t) { return new (t || AspNetUIAjaxComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["Title"])); };
-AspNetUIAjaxComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AspNetUIAjaxComponent, selectors: [["app-aspnet-uiajax"]], decls: 128, vars: 10, consts: [[1, "ang-matDialog"], ["fxFlex", "", "fxLayout", "column"], [1, "article-content"], [1, "header-center"], [1, "category"], [1, "blog-title"], [1, "author-info"], [1, "namee"], [1, "nameee"], [1, "follow-twitter"], ["href", "https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw", "data-show-count", "false", "data-show-screen-name", "false", 1, "twitter-follow-button"], [1, "date-readtime"], [1, "article-header"], [1, "article-paragraph"], [1, "inline-code"], ["href", "https://angular.io/guide/built-in-directives", "target", "_blank"], [1, "code"], [1, "code-block"], [1, ""], [1, "article-img"], ["src", "assets/blog-data.png", "alt", "dialog box", "role", "presentation", 2, "width", "100%", "height", "80%"], [1, "comments"], [3, "identifier"]], template: function AspNetUIAjaxComponent_Template(rf, ctx) { if (rf & 1) {
+AspNetUIAjaxComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AspNetUIAjaxComponent, selectors: [["app-aspnet-uiajax"]], decls: 140, vars: 11, consts: [[1, "ang-matDialog"], ["fxFlex", "", "fxLayout", "column"], [1, "article-content"], [1, "header-center"], [1, "category"], [1, "blog-title"], [1, "author-info"], [1, "namee"], [1, "nameee"], [1, "follow-twitter"], ["href", "https://twitter.com/elvis_shrestha?ref_src=twsrc%5Etfw", "data-show-count", "false", "data-show-screen-name", "false", 1, "twitter-follow-button"], [1, "date-readtime"], [1, "article-header"], [1, "article-paragraph"], [1, "inline-code"], ["href", "https://angular.io/guide/built-in-directives", "target", "_blank"], [1, "code"], [1, "code-block"], [1, ""], [1, "article-img"], ["src", "assets/blog-data.png", "alt", "dialog box", "role", "presentation", 2, "width", "100%", "height", "80%"], [1, "comments"], [3, "identifier"]], template: function AspNetUIAjaxComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "article", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -1750,49 +1773,66 @@ AspNetUIAjaxComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](98, "\n                ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](100, " Basic Reporting with Dropdown filter ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](100, " Next, we will use this class to seed our database with the following method in the Program class, at the very below of all the code. And we will call this method using this ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](101, "code");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](102, "await SeedDatabaseAsync();");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](101, "p", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](102, " After setting up the data layer, we can see now how we can create a basic reporting and filter the report using a dropdown, and we will use Jquery AJAX to filter data and make a call to our controller and update the table with the updated response. Replace the index method of home page with the below code: ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "pre", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](104, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](105, "code", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](106);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](107, "\n                ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "p", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](109, " We will pass the list of SelectListItem object which will contain the dropdown values and text for the Product brand with its ID. This can be passed as a viewbag but we will use a viewmodel class for our view to store its related data like int property for dropdown selection, selectlistitem list etc. This list is used in our view for displaying the dropdown filter. We can then use HTML Select element with ASP.NET HTML tab asp-for and asp-items to fill the dropdown box as shown below: ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](110, "pre", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](111, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](112, "code", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](113);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](114, "\n                ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "p", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](116, " The products data is displayed in our view using the bootstrap table. ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](117, "pre", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](118, "                    ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](119, "code", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](120);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](121, "\n                ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "p", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](123, " The complete view for our example will look like this image. ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](124, "div", 19);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](125, "img", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](103, " under the ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](104, "code");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](105, "app.UseStaticFiles();");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](106, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](107, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](109);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "div", 21);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](127, "disqus", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](110, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](111, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](112, " Basic Reporting with Dropdown filter ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](113, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](114, " After setting up the data layer, we can see now how we can create a basic reporting and filter the report using a dropdown, and we will use Jquery AJAX to filter data and make a call to our controller and update the table with the updated response. Replace the index method of home page with the below code: ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](116, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](117, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](118);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](121, " We will pass the list of SelectListItem object which will contain the dropdown values and text for the Product brand with its ID. This can be passed as a viewbag but we will use a viewmodel class for our view to store its related data like int property for dropdown selection, selectlistitem list etc. This list is used in our view for displaying the dropdown filter. We can then use HTML Select element with ASP.NET HTML tab asp-for and asp-items to fill the dropdown box as shown below: ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](123, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](124, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](125);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](126, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](128, " The products data is displayed in our view using the bootstrap table. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](129, "pre", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](130, "                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](131, "code", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](132);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](133, "\n                ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "p", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](135, " The complete view for our example will look like this image. ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](136, "div", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](137, "img", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](138, "div", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](139, "disqus", 22);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1809,6 +1849,8 @@ AspNetUIAjaxComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet5, "  \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet6, "  \n                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet9, "  \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet7, "  \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);

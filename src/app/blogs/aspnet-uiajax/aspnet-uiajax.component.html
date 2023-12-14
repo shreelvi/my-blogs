@@ -3,11 +3,11 @@
         <div class="article-content">
             <div class="header-center">
                 <h2 class="category">
-                    Angular tutorial
+                    ASP.NET tutorial
                 </h2>
                 <div>
                     <h1 class="blog-title">
-                        Angular Attribute Directive with Auto-focus example
+                        Basic Reporting in ASP.NET CORE MVC with EF Core
                     </h1>
                 </div>
                 <div class="author-info">
@@ -22,7 +22,6 @@
                             </span>
                         </div>
                         <div class="date-readtime">
-                            Sep 23 &nbsp; 2021
                         </div>
                     </div>
                     
@@ -33,15 +32,45 @@
 
         <div class="article-content">
             <div class="header-center">
-                <p class="article-paragraph">
-                    This <strong><i>Angular Attribute Directive with Auto-focus example</i></strong> article walks you through directives in Angular 9 with a sample example of how to create attribute directive to auto-focus on a <code>MAT INPUT</code> form. 
+                <p class="article-header">
+                    introduction
                 </p>
-               
-                <div class="article-img">
-                    <img src="assets/blog-2.jpg" alt="dialog box" width="700" height="300" role="presentation">
-                </div>
+                <p class="article-paragraph">
+                    In this tutorial, we will see how we can work with Data in ASP.NET MVC using Sqlite database and EF core.
+                    Working with data is a major step in developing a web app and as a developer we come across this all the time.
+                    We store the webapp data in its database for storage and we retrieve and work with it using C# LINQ in ASP.NET MVC framework.
+                    Then, we present and list the data from various sources such database tables, fetch from APIs, and present it in a views in Razor pages.
+
+                    This tutorial will show you how to make basic reporting particularly for the Admins/Masters to manage 
+                    the product details. We will get a chance to work with data in various common data scenarios as master details provide us with 
+                    chance to manage data and do tasks such as CRUD for our records in the database.
+                </p>
 
                 <p class="article-paragraph">
+                    
+                </p>
+               
+                <p class="article-paragraph">
+                    We are going to use .NET 6.0 version for our web application, the data layer will be developed in Sqlite database which
+                    is light-weight database intended for development purposes. And on the back-end, we will use EF core 6.0 with LINQ to query 
+                    the database as c# objects. We will not go into much detail in the database layer and c#/EF code for accessing the database objects,
+                    rather this will be more of a focus on the presentation-layer as we will explore techniques to utilize Javascript, JQuery and Ajax 
+                    for seamless user experience and listing the data as a table, we will use bootstrap for stylings.
+                </p>
+
+                <p class="article-header">
+                    Installing EF Core NuGet packages
+                </p>
+
+                <p class="article-paragraph">
+                    We will need to install three packages for this tutorial in order to use EF Core and Sqlite, and install Microsoft.EntityFrameworkCore.design
+                    in order to run commands to create migrations and update database tables.
+                    Required packages are as follows and code to install them using dotnet CLI. <br>
+                    <code class="inline-code">dotnet add package Microsoft.EntityFrameworkCore</code><br>
+                    <code class="inline-code">dotnet add package Microsoft.EntityFrameworkCore.Sqlite</code><br>
+                    <code class="inline-code">dotnet add package Microsoft.EntityFrameworkCore.design</code><br><br>
+
+                    
                     Directives in Angular are classes that adds an additional behavior to elements in Angular applications. 
                     The directive class is decorated with <code class="inline-code">@Directive </code> decorator
                     Directive changes the apperance or behavior of DOM elements and Angular components with attribute directives.
@@ -50,106 +79,71 @@
                     In this article, We will also see how we can make use of attribute directive class to add auto-focus in Login Page. This directive can be used throghout our application to add auto-focus function anywhere as needed.
 
                 </p>
+                <p class="article-header">
+                    Creating the model
+                </p>
+                <p class="article-paragraph">
+                    The model/entity classes for this example are in the following code.
+                </p>
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet1}}  
+                    </code>
+                </pre>
                
 
                 <p class="article-paragraph">
-                    There are different types of directives in Angular. <Strong>Components</Strong> is the most common directive type which is a directive with template.
-                    There are <strong>built-in attribute directives </strong>that Angular provides which modifies the behavior of other HTML elements, attributes, properties, and components.
+                    Now, we will define our database context class. In .Net 6.0, to create a database connection we will override OnConfiguring method and pass the connection string from the appsettings file as below.
+                    We used the startup class in .Net 5.0 to do this and we might encounter the error that the connection is not configured in the context class. Then, we will need to update our Program.cs class to set dependency injection with service container.
+                </p>
+
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet2}}  
+                    </code>
+                </pre>
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet3}}  
+                    </code>
+                </pre>
+
+                <p class="article-header">
+                    Creating the database using EF migrations
                 </p>
                 
                 <p class="article-paragraph">                  
-                    Some of the common built-in attribute directives are <code class="inline-code">NgClass</code> 
-                    which adds and removes CSS classes. <code class="inline-code">NgStyle</code> 
-                    which adds and removes a set of HTML styles. <code class="inline-code">NgModel</code> that adds two-way data binding to an HTML form element. 
-                    There is also <strong>Structural Directive</strong>. We will not go through them in detail here but you can find more info at link provided above. 
-
-                </p>
-
-                <p class="article-paragraph">
-                    In this article, we will focus on Attribute Directive and creating one. As explained before, <strong>Attribute Directives</strong> in Angular are responsible for changing the apperanace or behavior of DOM elements and Angular components. 
-                    Here, we will create a directive to add Auto-focus in the login form. In other words, we will create a directive to change the behavior of our HTML form. 
-                </p>
-
-                <p class="article-paragraph">
-                    Next, let us discuss about creating a Custom Attribute Directive in our Angular Application.
-                    The main use case is to implement auto-focus to our login page so user should not move mouse curser to the input box. Let's look for the code to accomplish this.
-                </p>
-
-                <p class="article-paragraph">
-                    We could add auto-focus to an input field simply by using the "autofocus" attribute from HTML form. 
-                    
+                    After installing the EF Core Design package, we will be able to add migration and create using this <code class=""></code>
                 </p>
 
                 <pre class="code">
                     <code class="code-block">
-                      {{snippet1}}
+                      {{snippet4}}  
                     </code>
                 </pre>
 
                 <p class="article-paragraph">
-                    This works fine with HTML pages but with Angular applications, this does not work when you move from one page to other.
-                    When user is logged out and it redirects to login page, this does not work. 
-                    This issue is caused because Autofocus feature of html5 only runs when the first time page loads as in SPA all scripts are loaded at first.  
+                    This will install migration scripts that will be used for creating the database in Data folder. Adding --verbose will give us detail if we get any error.
                 </p>
-
                 <p class="article-header">
-                    Let's build the attribute directive 
+                    Creating the Database seed class
                 </p>
-
-                <p class="article-paragraph">
-                    We will use Angular CLI to create a directive <code class="inline-code">ng generate directive auto-focus</code>
-                    The CLI creates <code class="inline-code">src/app/auto-focus.directive.ts</code>. It also updates our AppModule.
-                    <br> <br> Let's update our directive file which should look like below snippet:
-                </p>
-
                 <pre class="code">
                     <code class="code-block">
-                      {{snippet2}}
-        
+                      {{snippet5}}  
+                    </code>
+                </pre>
+                <p class="article-paragraph">
+                    Add the StoreContextSeed.cs class under data folder and replace it with the below code which will add example data in the database.
+                    Notice that we are using three .json files for fill the tables used in our example.
+                </p>
+                <pre class="code">
+                    <code class="code-block">
+                      {{snippet6}}  
                     </code>
                 </pre>
 
-                <p class="article-paragraph">
-                    Here, we are using <code>@Directive</code> Decorator to define our directive.
-                    It specifies the directive's CSS attribute selector, [matInputFocus]. 
-                    <br> <br> We add <code>MatInput</code> from <code>@angular/material/input</code> in the directive's constructor which provides a reference to the host DOM element, MATINPUT where we want to add <code>AutoFocus</code>.
-                    The logic in the constructor sets the focus on the selected MAT INPUT HTML element.
-                    
-                    <br><br> We will then use this as an HTML element attribute like below wherever we require auto focus feature in our application by just adding the selector <strong>matInputFocus</strong> in Mat-Input elements.
-                    <br><br> First, lets Import the Directive component in the app module or in the Module where we want to use it. 
-                    In this example, we are using it in the Login component, so we will import this directive in our module like: 
-                </p>
-
-                <pre class="code">
-                    <code class="code-block">
-                      {{snippet4}}
-        
-                    </code>
-                </pre>
-
-                <p class="article-paragraph">
-                    Finally, update the login form.
-                </p>
-
-                <pre class="code">
-                    <code class="code-block">
-                      {{snippet3}}
-        
-                    </code>
-                </pre>
-
-                <p class="article-paragraph">
-                    Angular creates an instance of the Directive class we created and provides a reference to the 
-                    <code>input</code> element into the directive's constructor which sets the focus.
-                </p>
-
-                <p class="article-paragraph">
-                    In the same way, you can create custom attribute directives to change the apperance or behavior of your page.
-                    We can handle user events to use directives, pass custom values from user input into attribute directives.
-                    
-                    <br> <br> For example: we can create highlight directive to highlight an HTML element on mouse-hover, mouse-click. We can get color that we want to highlight from user and pass it to the directive to apply the selection.
-                </p>
-
+                
 
                 
             </div>

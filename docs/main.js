@@ -1838,7 +1838,7 @@ AspNetUIAjaxComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet6, "  \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet9, "  \n                    ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet10, "  \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("\n                      ", ctx.snippet7, "  \n                    ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
